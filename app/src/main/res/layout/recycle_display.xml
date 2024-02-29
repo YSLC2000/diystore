@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/display_user_img"
+    android:padding="10dp">
+
+    <ImageView
+        android:id="@+id/display_user_avatar"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="8dp"
+        android:src="@drawable/display_user_img_gwen"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!--    <ImageView-->
+    <!--        android:id="@+id/imageView5"-->
+    <!--        android:layout_width="100dp"-->
+    <!--        android:layout_height="100dp"-->
+    <!--        android:layout_marginStart="32dp"-->
+    <!--        android:layout_marginTop="8dp"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toBottomOf="@+id/display_user_avatar" />-->
+
+    <!--    <ImageView-->
+    <!--        android:id="@+id/imageView6"-->
+    <!--        android:layout_width="100dp"-->
+    <!--        android:layout_height="100dp"-->
+    <!--        android:layout_marginStart="4dp"-->
+    <!--        android:layout_marginTop="8dp"-->
+    <!--        app:layout_constraintStart_toEndOf="@+id/imageView5"-->
+    <!--        app:layout_constraintTop_toBottomOf="@+id/display_user_avatar" />-->
+
+    <!--    <ImageView-->
+    <!--        android:id="@+id/imageView8"-->
+    <!--        android:layout_width="100dp"-->
+    <!--        android:layout_height="100dp"-->
+    <!--        android:layout_marginStart="2dp"-->
+    <!--        android:layout_marginTop="8dp"-->
+    <!--        app:layout_constraintStart_toEndOf="@+id/imageView6"-->
+    <!--        app:layout_constraintTop_toBottomOf="@+id/display_user_avatar" />-->
+
+    <TextView
+        android:id="@+id/display_user_name"
+        android:layout_width="50dp"
+        android:layout_height="10dp"
+
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="16dp"
+        android:includeFontPadding="false"
+        android:text="YSLC"
+        android:textSize="10sp"
+        app:layout_constraintStart_toEndOf="@+id/display_user_avatar"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/display_user_title"
+        android:layout_width="200dp"
+        android:layout_height="15dp"
+        android:includeFontPadding="false"
+        android:text="4060ti+12490f 3a畅玩"
+        android:textSize="12sp"
+        app:layout_constraintStart_toEndOf="@+id/display_user_avatar"
+        app:layout_constraintTop_toBottomOf="@+id/display_user_name" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/display_recycleView_img"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
+        android:orientation="horizontal"
+        android:padding="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/display_user_price"
+        android:layout_width="84dp"
+        android:layout_height="26dp"
+        android:layout_marginStart="16dp"
+        android:text="￥5800"
+        android:textColor="@color/red"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/display_recycleView_img" />
+
+    <ImageView
+        android:id="@+id/display_user_ThumbsUp"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="4dp"
+        android:src="@drawable/icon_display_user_thumbs"
+        app:layout_constraintEnd_toStartOf="@+id/display_user_ThumbsUpNun"
+        app:layout_constraintTop_toBottomOf="@+id/display_recycleView_img" />
+
+    <TextView
+        android:id="@+id/display_user_ThumbsUpNun"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="16dp"
+        android:gravity="center"
+        android:text="1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/display_recycleView_img" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
