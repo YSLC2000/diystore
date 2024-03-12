@@ -25,11 +25,13 @@ public class PartsAdapter extends RecyclerView.Adapter<PartsAdapter.ViewHolder> 
     Context mcontext;
     String str;
     PartsTestData partName;
+    int backPosition;
 
-    public PartsAdapter(List<PartsTestData> list, String str, Context context) {
+    public PartsAdapter(List<PartsTestData> list, String str, Context context, int backPosition) {
         this.list = list;
         this.mcontext = context;
         this.str = str;
+        this.backPosition = backPosition;
     }
 
     @NonNull
@@ -42,6 +44,7 @@ public class PartsAdapter extends RecyclerView.Adapter<PartsAdapter.ViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull PartsAdapter.ViewHolder holder, int position) {
+
         PartsTestData partsTestData = list.get(position);
         holder.partImage.setImageResource(partsTestData.getPartImage());
         holder.partName.setText(partsTestData.getPartName());
@@ -56,8 +59,10 @@ public class PartsAdapter extends RecyclerView.Adapter<PartsAdapter.ViewHolder> 
                 Log.d("partName", "你点击了" + partName);
                 Intent intent = new Intent();
                 intent.putExtra("back", partName);
-                ((Activity)mcontext).setResult(Activity.RESULT_OK, intent);
+                intent.putExtra("backPosition",backPosition);
+                ((Activity) mcontext).setResult(Activity.RESULT_OK, intent);
                 ((Activity) mcontext).finish();
+
             }
         });
     }
@@ -80,4 +85,6 @@ public class PartsAdapter extends RecyclerView.Adapter<PartsAdapter.ViewHolder> 
 
         }
     }
+
+
 }

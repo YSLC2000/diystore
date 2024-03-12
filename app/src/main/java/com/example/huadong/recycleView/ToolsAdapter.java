@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.huadong.R;
 import com.example.huadong.activity.ChoiceActivity;
+import com.example.huadong.been.CallBack;
 import com.example.huadong.been.PartsTestData;
 import com.example.huadong.been.ToolsTestData;
 
@@ -28,17 +29,14 @@ import java.util.List;
 public class ToolsAdapter extends RecyclerView.Adapter<ToolsAdapter.ViewHolder> {
     private Context mcontext;
     private PartsTestData result;
-
+    private CallBack callBack;
     List<ToolsTestData> list = new ArrayList<>();
     private final int REQUEST_CODE = 1;
 
-    public ToolsAdapter(List<ToolsTestData> list, Context context, PartsTestData result) {
+    public ToolsAdapter(List<ToolsTestData> list, Context context) {
         this.list = list;
         this.mcontext = context;
-        this.result = result;
-
     }
-
 
     @NonNull
     @Override
@@ -50,9 +48,11 @@ public class ToolsAdapter extends RecyclerView.Adapter<ToolsAdapter.ViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull ToolsAdapter.ViewHolder holder, int position) {
-
+//        if (callBack != null) {
+//            callBack.dataTo(result);
+//        }
+        int i = position;
         ToolsTestData current = list.get(position);
-
         String name = current.getText();
         holder.textView.setText(name);
         holder.imageView.setImageResource(current.getImages());
@@ -61,25 +61,19 @@ public class ToolsAdapter extends RecyclerView.Adapter<ToolsAdapter.ViewHolder> 
             public void onClick(View v) {
                 Intent intent = new Intent(mcontext, ChoiceActivity.class);
                 intent.putExtra("judgment", name);
+                intent.putExtra("position", i);
                 Activity activity = (Activity) mcontext;
                 activity.startActivityForResult(intent, REQUEST_CODE);
-                
             }
         });
     }
-
-
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, Intent data){
-//         String result = data.getExtras().getString("result");//得到新Activity 关闭后返回的数
-//    }
 
     @Override
     public int getItemCount() {
         return list.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         ImageView imageView;
         TextView textView;
         Button button;
@@ -89,6 +83,14 @@ public class ToolsAdapter extends RecyclerView.Adapter<ToolsAdapter.ViewHolder> 
             imageView = itemView.findViewById(R.id.tools_img);
             textView = itemView.findViewById(R.id.tools_title);
             button = itemView.findViewById(R.id.tools_btn);
+        }
+
+        public void upData(PartsTestData partsTestData) {
+            //更新recycleView中的对应项内容
+            ViewGroup.LayoutParams layoutParams = textView.getLayoutParams();
+            textView.setLayoutParams(layoutParams);
+            textView.setX(200);
+            textView.setText(partsTestData.getPartName());
         }
     }
 }

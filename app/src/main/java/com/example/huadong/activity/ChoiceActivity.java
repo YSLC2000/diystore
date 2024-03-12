@@ -24,6 +24,7 @@ public class ChoiceActivity extends AppCompatActivity {
     private final List<PartsTestData> mianboard_list = new ArrayList<>();
     private RecyclerView recyclerView;
     private String str;
+    private Integer position;
 
 
     @Override
@@ -32,25 +33,27 @@ public class ChoiceActivity extends AppCompatActivity {
         setContentView(R.layout.activity_choice);
         DataInit();
         str = getIntent().getStringExtra("judgment");
-        Log.d("chakan", str);
+        position = getIntent().getIntExtra("position", -1);
+        Log.d("TESTPOSITION",position.toString());
         PartsAdapter partsAdapter = null;
         if (str.equalsIgnoreCase("cpu")) {
-            partsAdapter = new PartsAdapter(cpu_list, str, this);
-        } else if (str.equals("主板")){
-            partsAdapter =new PartsAdapter(mianboard_list,str,this);
+            partsAdapter = new PartsAdapter(cpu_list, str, this,position);
+        } else if (str.equals("主板")) {
+            partsAdapter = new PartsAdapter(mianboard_list, str, this,position);
         }
         TextView textView = findViewById(R.id.test);
         textView.setText(str);
 
-        //返回之前activity的内容
+      //  返回之前activity的内容
 //        Intent intent = new Intent();
-//        intent.putExtra("back", str);
+//        intent.putExtra("backPosition",position);
 //        setResult(Activity.RESULT_OK, intent);
+
 
         recyclerView = findViewById(R.id.part_recycle);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(partsAdapter);
-        DividerItemDecoration mDiv= new DividerItemDecoration(this,DividerItemDecoration.VERTICAL);
+        DividerItemDecoration mDiv = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
         recyclerView.addItemDecoration(mDiv);
 
     }
@@ -74,7 +77,6 @@ public class ChoiceActivity extends AppCompatActivity {
         cpu_list.add(partsTestData);
         cpu_list.add(cpu);
         cpu_list.add(cpu1);
-
 
 
         PartsTestData partsTestData1 = new PartsTestData();

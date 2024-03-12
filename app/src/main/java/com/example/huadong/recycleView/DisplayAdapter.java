@@ -39,7 +39,6 @@ public class DisplayAdapter extends RecyclerView.Adapter<DisplayAdapter.myViewHo
         holder.display_user_title.setText(displayTestData.getDisplay_title());
         holder.display_user_price.setText(displayTestData.getDisplay_user_price());
         holder.display_user_ThumbsUp.setText(displayTestData.getDisplay_user_ThumbsUpNun());
-
         holder.childRecycle.setAdapter(new DisplayListAdapter(displayListTestData));
 
     }
