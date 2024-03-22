@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.huadong.R;
@@ -30,6 +31,8 @@ public class ToolsAdapter extends RecyclerView.Adapter<ToolsAdapter.ViewHolder> 
     private Context mcontext;
     private PartsTestData result;
     private CallBack callBack;
+
+
     List<ToolsTestData> list = new ArrayList<>();
     private final int REQUEST_CODE = 1;
 
@@ -77,20 +80,39 @@ public class ToolsAdapter extends RecyclerView.Adapter<ToolsAdapter.ViewHolder> 
         ImageView imageView;
         TextView textView;
         Button button;
+        ConstraintLayout constraintLayout;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             imageView = itemView.findViewById(R.id.tools_img);
             textView = itemView.findViewById(R.id.tools_title);
             button = itemView.findViewById(R.id.tools_btn);
+            constraintLayout = itemView.findViewById(R.id.item);
         }
 
         public void upData(PartsTestData partsTestData) {
             //更新recycleView中的对应项内容
             ViewGroup.LayoutParams layoutParams = textView.getLayoutParams();
+            layoutParams.height = 100;
+//            int widthMeasureSpec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
+//            int heightMeasureSpec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
+//            textView.measure(widthMeasureSpec, heightMeasureSpec);
+//            int width = textView.getMeasuredWidth();
+//            layoutParams.width = width;
             textView.setLayoutParams(layoutParams);
-            textView.setX(200);
+            textView.setX(150);
+//            textView.post(new Runnable() {
+//                @Override
+//                public void run() {
+//                    int width = (int)textView.getPaint().measureText(textView.getText().toString());
+//                    textView.setWidth((int) width);
+//                }
+//            });
             textView.setText(partsTestData.getPartName());
+            ViewGroup.LayoutParams img = imageView.getLayoutParams();
+            img.width = 100;
+            img.height = 100;
+            imageView.setImageResource(partsTestData.getPartImage());
         }
     }
 }

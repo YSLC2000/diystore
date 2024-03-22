@@ -22,6 +22,7 @@ import java.util.List;
 public class ChoiceActivity extends AppCompatActivity {
     private final List<PartsTestData> cpu_list = new ArrayList<>();
     private final List<PartsTestData> mianboard_list = new ArrayList<>();
+    private final List<PartsTestData> graphics =new ArrayList<>();
     private RecyclerView recyclerView;
     private String str;
     private Integer position;
@@ -34,17 +35,19 @@ public class ChoiceActivity extends AppCompatActivity {
         DataInit();
         str = getIntent().getStringExtra("judgment");
         position = getIntent().getIntExtra("position", -1);
-        Log.d("TESTPOSITION",position.toString());
+        Log.d("TESTPOSITION", position.toString());
         PartsAdapter partsAdapter = null;
         if (str.equalsIgnoreCase("cpu")) {
-            partsAdapter = new PartsAdapter(cpu_list, str, this,position);
+            partsAdapter = new PartsAdapter(cpu_list, str, this, position);
         } else if (str.equals("主板")) {
-            partsAdapter = new PartsAdapter(mianboard_list, str, this,position);
+            partsAdapter = new PartsAdapter(mianboard_list, str, this, position);
+        } else if (str.equals("显卡")) {
+            partsAdapter = new PartsAdapter(graphics, str, this, position);
         }
         TextView textView = findViewById(R.id.test);
         textView.setText(str);
 
-      //  返回之前activity的内容
+        //  返回之前activity的内容
 //        Intent intent = new Intent();
 //        intent.putExtra("backPosition",position);
 //        setResult(Activity.RESULT_OK, intent);
@@ -60,19 +63,19 @@ public class ChoiceActivity extends AppCompatActivity {
 
     private void DataInit() {
         PartsTestData partsTestData = new PartsTestData();
-        partsTestData.setPartImage(R.drawable.cpu);
-        partsTestData.setPartName("cpu");
-        partsTestData.setPartParameter("i9 14900k");
+        partsTestData.setPartImage(R.drawable.i9_14900k);
+        partsTestData.setPartName("i9 14900k");
+        partsTestData.setPartParameter("高性能生产力cpu");
         partsTestData.setPartPrice(3999);
         PartsTestData cpu = new PartsTestData();
-        cpu.setPartName("cpu1");
+        cpu.setPartName("i5 12490f");
         cpu.setPartImage(R.drawable.cpu);
-        cpu.setPartParameter("i5 12490f");
+        cpu.setPartParameter("游戏不用愁，2k上我我能行");
         cpu.setPartPrice(1099);
         PartsTestData cpu1 = new PartsTestData();
-        cpu1.setPartName("cpu2");
+        cpu1.setPartName("i7 13700k");
         cpu1.setPartImage(R.drawable.cpu);
-        cpu1.setPartParameter("i7 13700k");
+        cpu1.setPartParameter("我是高级生产力");
         cpu1.setPartPrice(2999);
         cpu_list.add(partsTestData);
         cpu_list.add(cpu);
@@ -81,16 +84,25 @@ public class ChoiceActivity extends AppCompatActivity {
 
         PartsTestData partsTestData1 = new PartsTestData();
         partsTestData1.setPartImage(R.drawable.mianboard);
-        partsTestData1.setPartName("主板");
-        partsTestData1.setPartParameter("b760m");
+        partsTestData1.setPartName("b760m");
+        partsTestData1.setPartParameter("酷睿十二代i5板板");
         partsTestData1.setPartPrice(1300);
         PartsTestData partsTestData2 = new PartsTestData();
         partsTestData2.setPartImage(R.drawable.mianboard);
-        partsTestData2.setPartName("主板");
-        partsTestData2.setPartParameter("z790");
+        partsTestData2.setPartName("z790");
+        partsTestData2.setPartParameter("酷睿十二代i7，i9板板");
         partsTestData2.setPartPrice(1800);
         mianboard_list.add(partsTestData1);
         mianboard_list.add(partsTestData2);
+
+
+        PartsTestData partsTestData3 = new PartsTestData();
+        partsTestData3.setPartImage(R.drawable.nvidia_4060);
+        partsTestData3.setPartName("RTX4060");
+        partsTestData3.setPartParameter("这真的是2023的甜品卡吗?");
+        partsTestData3.setPartPrice(2199);
+
+        graphics.add(partsTestData3);
 
 
     }
