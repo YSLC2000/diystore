@@ -8,7 +8,18 @@ public class DisplayTestData {
     private String display_userName;
     private List<DisplayListTestData> display_img;
     private String display_user_price;
-    private String display_user_ThumbsUpNun;
+    private int display_user_ThumbsUpNun;
+    public DisplayTestData(){
+
+    }
+    public DisplayTestData(Integer display_avatar,String display_title,String display_userName,List<DisplayListTestData> display_img,String display_user_price,int display_user_ThumbsUpNun){
+         this.display_avatar=display_avatar;
+         this.display_title=display_title;
+         this.display_img=display_img;
+         this.display_userName=display_userName;
+         this.display_user_price=display_user_price;
+         this.display_user_ThumbsUpNun=display_user_ThumbsUpNun;
+    }
 
 
 
@@ -20,11 +31,11 @@ public class DisplayTestData {
         this.display_user_price = display_user_price;
     }
 
-    public String getDisplay_user_ThumbsUpNun() {
+    public int getDisplay_user_ThumbsUpNun() {
         return display_user_ThumbsUpNun;
     }
 
-    public void setDisplay_user_ThumbsUpNun(String display_user_ThumbsUpNun) {
+    public void setDisplay_user_ThumbsUpNun(int display_user_ThumbsUpNun) {
         this.display_user_ThumbsUpNun = display_user_ThumbsUpNun;
     }
 

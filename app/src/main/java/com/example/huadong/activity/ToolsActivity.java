@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,6 +25,7 @@ import com.example.huadong.R;
 import com.example.huadong.been.CallBack;
 import com.example.huadong.been.PartsTestData;
 import com.example.huadong.been.ToolsTestData;
+import com.example.huadong.been.UserInfo;
 import com.example.huadong.recycleView.ToolsAdapter;
 import com.example.huadong.untils.OrderDataBase;
 
@@ -41,6 +43,7 @@ public class ToolsActivity extends AppCompatActivity {
     private ImageView back_btn;
     private TextView btn_finish;
     private OrderDataBase orderDataBase;
+    private EditText editText;
 
 
     @Override
@@ -48,12 +51,15 @@ public class ToolsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tools);
         btn_finish = findViewById(R.id.btn_finish);
+        editText=findViewById(R.id.tool_name);
         btn_finish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                UserInfo userInfo =UserInfo.getsUserInfo();
+                if(userInfo!=null){
+
+                }
                 List<String> list = new ArrayList<>();
-
-
 //                Log.d("json数据查看", jsonObject.toString());
 //                Log.d("json数据获取", test);
                 TextView textView;
@@ -64,7 +70,6 @@ public class ToolsActivity extends AppCompatActivity {
                     RecyclerView.ViewHolder viewHolder = mToolsRecycleView.findViewHolderForAdapterPosition(i);
                     if (viewHolder instanceof ToolsAdapter.ViewHolder) {
                         ToolsAdapter.ViewHolder viewHolder1 = (ToolsAdapter.ViewHolder) viewHolder;
-
                         textView = viewHolder1.itemView.findViewById(R.id.tools_title);
                         imageView = viewHolder1.itemView.findViewById(R.id.tools_img);
                         text = textView.getText().toString();
@@ -97,14 +102,23 @@ public class ToolsActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
                 String sysTime = String.valueOf(System.currentTimeMillis());
-                int row = OrderDataBase.getInstance(ToolsActivity.this).addOrder(sysTime, String.valueOf(jsonObject));
+                String order_name =editText.getText().toString();
+                String user_id= UserInfo.sUserInfo.getUsername();
+                String cpu =list.get(0).toString();
+                String mainBoard =list.get(1).toString();
+                String graphics = list.get(2).toString();
+                String memorySticks = list.get(3).toString();
+                String power =list.get(4).toString();
+                String hardDisk = list.get(5).toString();
+                String radiator= list.get(6).toString();
+                String chassis =list.get(7).toString();
+                int row = OrderDataBase.getInstance(ToolsActivity.this).addOrders(user_id,sysTime,order_name,cpu,mainBoard,graphics,memorySticks,power,hardDisk,radiator,chassis,19999);
                 if (row > 0) {
                     Toast.makeText(ToolsActivity.this, "添加成功", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(ToolsActivity.this, "失败", Toast.LENGTH_SHORT).show();
                 }
-
-
+                finish();
             }
         });
         mToolsRecycleView = findViewById(R.id.recyclerView);
@@ -152,7 +166,7 @@ public class ToolsActivity extends AppCompatActivity {
         toolsTestData.setImages(R.drawable.cpu);
         toolsTestData.setText("CPU");
         ToolsTestData toolsTestData1 = new ToolsTestData();
-        toolsTestData1.setImages(R.drawable.mianboard);
+        toolsTestData1.setImages(R.drawable.mainboard);
         toolsTestData1.setText("主板");
         ToolsTestData toolsTestData2 = new ToolsTestData();
         toolsTestData2.setImages(R.drawable.graphics);

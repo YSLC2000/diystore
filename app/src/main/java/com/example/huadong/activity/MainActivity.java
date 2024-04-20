@@ -18,6 +18,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     List<Fragment> fragmentList = new ArrayList<>();
+    BlankFragmentUser userFragment;
 
     private Mydatabase mydatabase;
 
@@ -30,7 +31,6 @@ public class MainActivity extends AppCompatActivity {
         mydatabase = new Mydatabase(this, "Test.db", null, 1);
         mydatabase.getWritableDatabase();
         initData();
-
         MainActivityAdapter adapter = new MainActivityAdapter(getSupportFragmentManager(), fragmentList);
         viewPager.setAdapter(adapter);
         //setOffscreenPageLimit控制viewPager缓存的数量。（以当前位置中心与隔壁相邻的数量）
@@ -56,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case 3:
                         bottomNavigationView.setSelectedItemId(R.id.menu_user);
+
                 }
             }
 
@@ -75,7 +76,9 @@ public class MainActivity extends AppCompatActivity {
                 } else if (item.getItemId() == R.id.menu_news) {
                     viewPager.setCurrentItem(2);
                 } else if (item.getItemId() == R.id.menu_user) {
+                    userFragment.loadData();
                     viewPager.setCurrentItem(3);
+
                 }
                 return true;
             }
@@ -89,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
         fragmentList.add(richFragment);
         BlankFragmentDisplay newsFragment = BlankFragmentDisplay.newInstance("展示", "");
         fragmentList.add(newsFragment);
-        BlankFragmentUser userFragment = BlankFragmentUser.newInstance("个人中心","");
+        userFragment = BlankFragmentUser.newInstance("个人中心","");
         fragmentList.add(userFragment);
     }
 }

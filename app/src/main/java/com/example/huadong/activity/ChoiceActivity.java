@@ -5,12 +5,9 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.huadong.R;
 import com.example.huadong.been.PartsTestData;
@@ -83,12 +80,12 @@ public class ChoiceActivity extends AppCompatActivity {
 
 
         PartsTestData partsTestData1 = new PartsTestData();
-        partsTestData1.setPartImage(R.drawable.mianboard);
+        partsTestData1.setPartImage(R.drawable.mainboard);
         partsTestData1.setPartName("b760m");
         partsTestData1.setPartParameter("酷睿十二代i5板板");
         partsTestData1.setPartPrice(1300);
         PartsTestData partsTestData2 = new PartsTestData();
-        partsTestData2.setPartImage(R.drawable.mianboard);
+        partsTestData2.setPartImage(R.drawable.mainboard);
         partsTestData2.setPartName("z790");
         partsTestData2.setPartParameter("酷睿十二代i7，i9板板");
         partsTestData2.setPartPrice(1800);

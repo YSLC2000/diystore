@@ -94,28 +94,34 @@ public class BlankFragmentHome extends Fragment {
     private void DateInit() {
         HomeTestData homeTestData =new HomeTestData();
         homeTestData.setHomeTitle("老黄刀法精准，这牙膏我还能再挤十年");
-        homeTestData.setHomeImage(R.drawable.nvidia_4060);
-        homeTestData.setHomeDay("2024/1/17");
+        homeTestData.setHomeImage(R.drawable.intel_core);
+        homeTestData.setHomeDay("2024/3/17");
         homeTestData.setHomeNum(999);
         HomeTestData homeTestData1 =new HomeTestData();
         homeTestData1.setHomeTitle("红色'农民崛起'，AMD yes！战未来");
         homeTestData1.setHomeImage(R.drawable.rx7900xtx);
-        homeTestData1.setHomeDay("2024/1/6");
+        homeTestData1.setHomeDay("2024/3/16");
         homeTestData1.setHomeNum(999);
         HomeTestData homeTestData2 =new HomeTestData();
-        homeTestData.setHomeTitle("老黄刀法精准，这牙膏我还能再挤十年");
+        homeTestData2.setHomeTitle("4060居然打不过3060ti？到底如何让我们揭晓");
         homeTestData2.setHomeImage(R.drawable.nvidia_4060);
         homeTestData2.setHomeDay("2024/1/17");
         homeTestData2.setHomeNum(999);
         HomeTestData homeTestData3 =new HomeTestData();
-        homeTestData3.setHomeTitle("老黄刀法精准，这牙膏我还能再挤十年");
-        homeTestData3.setHomeImage(R.drawable.nvidia_4060);
-        homeTestData3.setHomeDay("2024/1/17");
+        homeTestData3.setHomeTitle("6750gre跨阶级对决4060ti，谁强孰弱？");
+        homeTestData3.setHomeImage(R.drawable.amd_6750gre);
+        homeTestData3.setHomeDay("2024/3/15");
         homeTestData.setHomeNum(999);
+        HomeTestData homeTestData4 =new HomeTestData();
+        homeTestData4.setHomeTitle("4090究极生产力");
+        homeTestData4.setHomeImage(R.drawable.rtx_4090);
+        homeTestData4.setHomeDay("2024/3/14");
+        homeTestData4.setHomeNum(999);
         list.add(homeTestData);
         list.add(homeTestData1);
         list.add(homeTestData2);
         list.add(homeTestData3);
+        list.add(homeTestData4);
 
     }
 

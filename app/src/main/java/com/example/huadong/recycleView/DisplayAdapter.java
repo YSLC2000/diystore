@@ -1,5 +1,6 @@
 package com.example.huadong.recycleView;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,14 +14,21 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.huadong.R;
 import com.example.huadong.been.DisplayListTestData;
 import com.example.huadong.been.DisplayTestData;
+import com.example.huadong.been.OrderData;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class DisplayAdapter extends RecyclerView.Adapter<DisplayAdapter.myViewHodler> {
+    Context context;
     private List<DisplayTestData> list =new ArrayList<>();
     public DisplayAdapter(List line){
         this.list=line;
+    }
+    public void setDisplayAdapter(List<DisplayTestData> list, Context context) {
+        this.list = list;
+        this.context=context;
+        notifyDataSetChanged();
     }
     @NonNull
     @Override
@@ -38,9 +46,8 @@ public class DisplayAdapter extends RecyclerView.Adapter<DisplayAdapter.myViewHo
         holder.display_user_name.setText(displayTestData.getDisplay_userName());
         holder.display_user_title.setText(displayTestData.getDisplay_title());
         holder.display_user_price.setText(displayTestData.getDisplay_user_price());
-        holder.display_user_ThumbsUp.setText(displayTestData.getDisplay_user_ThumbsUpNun());
+        holder.display_user_ThumbsUp.setText(displayTestData.getDisplay_user_ThumbsUpNun()+"");
         holder.childRecycle.setAdapter(new DisplayListAdapter(displayListTestData));
-
     }
 
     @Override
@@ -66,4 +73,16 @@ public class DisplayAdapter extends RecyclerView.Adapter<DisplayAdapter.myViewHo
 
         }
     }
+
+
+
+//    public shareItemListener mShareItemListener;
+//    public void setShareItemListener(shareItemListener mShareItemListener) {
+//        this.mShareItemListener = mShareItemListener;
+//    }
+//
+//    public interface shareItemListener{
+//        void flush(DisplayTestData displayTestData,int position);
+//
+//    }
 }

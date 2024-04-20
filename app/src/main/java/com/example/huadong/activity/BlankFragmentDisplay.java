@@ -10,17 +10,22 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.huadong.R;
 import com.example.huadong.been.DisplayListTestData;
 import com.example.huadong.been.DisplayTestData;
 import com.example.huadong.recycleView.DisplayAdapter;
 import com.example.huadong.recycleView.DisplayListAdapter;
+import com.example.huadong.recycleView.OrderAdapter;
+import com.example.huadong.untils.OrderDataBase;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -32,14 +37,14 @@ import java.util.List;
  * create an instance of this fragment.
  */
 public class BlankFragmentDisplay extends Fragment {
-    private RecyclerView display_recycleView,display_recycleView_list;
+    private RecyclerView display_recycleView;
     private List<DisplayListTestData> list_img =new ArrayList<>();
-    private final DisplayListAdapter displayListAdapter=new DisplayListAdapter(list_img);
+
+    private List<DisplayTestData> list =new ArrayList<>();
+    private DisplayAdapter displayAdapter;
+    private Button btn_flush;
 
 
-    private final List<DisplayTestData> list =new ArrayList<>();
-
-    private final DisplayAdapter displayAdapter=new DisplayAdapter(list);
 
 
     // TODO: Rename parameter arguments, choose names that match
@@ -92,8 +97,20 @@ public class BlankFragmentDisplay extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState){
         super.onViewCreated(view,savedInstanceState);
+        btn_flush =view.findViewById(R.id.flush);
         SearchView searchView =(SearchView) view.findViewById(R.id.searchView);
-        DataInit();
+//        DataInit();
+        list= OrderDataBase.getInstance(getActivity()).share_display();
+        Log.d("DataInit",list.toString());
+        displayAdapter = new DisplayAdapter(list);
+        btn_flush.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LoadData();
+                Toast.makeText(getActivity(),"点击了flush按钮",Toast.LENGTH_SHORT).show();
+            }
+        });
+
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -111,42 +128,61 @@ public class BlankFragmentDisplay extends Fragment {
         display_recycleView=view.findViewById(R.id.display_recycleView);
         display_recycleView.setLayoutManager(new LinearLayoutManager(view.getContext(),LinearLayoutManager.VERTICAL,false));
         display_recycleView.setAdapter(displayAdapter);
+
 }
+    public void LoadData(){
+        List<DisplayTestData> list=OrderDataBase.getInstance(getActivity()).share_display();
+        displayAdapter.setDisplayAdapter(list,getActivity());
+        display_recycleView.setAdapter(displayAdapter);
+    }
 
     private void DataInit() {
-        DisplayListTestData displayListTestData1 =new DisplayListTestData();
-        DisplayListTestData displayListTestData2 =new DisplayListTestData();
-        displayListTestData1.setImg(R.drawable.nvidia_4060);
-        displayListTestData2.setImg(R.drawable.intel_cpu);
-        list_img.add(displayListTestData1);
-        list_img.add(displayListTestData2);
+//        DisplayListTestData displayListTestData1 =new DisplayListTestData();
+//        DisplayListTestData displayListTestData2 =new DisplayListTestData();
+//        DisplayListTestData displayListTestData3 =new DisplayListTestData();
+//        DisplayListTestData displayListTestData4=new DisplayListTestData();
+//        DisplayListTestData displayListTestData5 =new DisplayListTestData();
+//        DisplayListTestData displayListTestData6 =new DisplayListTestData();
+//        displayListTestData1.setImg(R.drawable.nvidia_4060);
+//        displayListTestData2.setImg(R.drawable.intel_cpu);
+//        displayListTestData3.setImg(R.drawable.intel_cpu);
+//        displayListTestData4.setImg(R.drawable.intel_cpu);
+//        displayListTestData5.setImg(R.drawable.intel_cpu);
+//        displayListTestData6.setImg(R.drawable.intel_cpu);
+//        list_img.add(displayListTestData1);
+//        list_img.add(displayListTestData2);
+//        list_img.add(displayListTestData3);
+//        list_img.add(displayListTestData4);
+//        list_img.add(displayListTestData5);
+//        list_img.add(displayListTestData6);
+//
+//
+//        DisplayTestData displayTestData=new DisplayTestData();
+//        displayTestData.setDisplay_avatar(R.drawable.display_user_img_gwen);
+//        displayTestData.setDisplay_img(list_img);
+//        displayTestData.setDisplay_userName("YSLC");
+//        displayTestData.setDisplay_title("i9-14900k+RTX4090 超级生产力");
+//        displayTestData.setDisplay_user_price("￥11999");
+//        displayTestData.setDisplay_user_ThumbsUpNun("999");
+//        list.add(displayTestData);
+//
+//        DisplayTestData displayTestData1=new DisplayTestData();
+//        displayTestData1.setDisplay_avatar(R.drawable.nvidia_4060);
+//        displayTestData1.setDisplay_img(list_img);
+//        displayTestData1.setDisplay_userName("XHX");
+//        displayTestData1.setDisplay_user_price("￥4699");
+//        displayTestData1.setDisplay_title("i5-12490k+RTX4060ti" +"牙膏是要挤的，但是性能还是够的");
+//        displayTestData1.setDisplay_user_ThumbsUpNun("999");
+//        list.add(displayTestData1);
+//
+//        DisplayTestData displayTestData2=new DisplayTestData();
+//        displayTestData2.setDisplay_avatar(R.drawable.nvidia_4060);
+//        displayTestData2.setDisplay_img(list_img);
+//        displayTestData2.setDisplay_userName("XHX");
+//        displayTestData2.setDisplay_user_price("￥4699");
+//        displayTestData2.setDisplay_title("i5-12490k+RTX4060ti" +"牙膏是要挤的，但是性能还是够的");
+//        displayTestData2.setDisplay_user_ThumbsUpNun("999");
+//        list.add(displayTestData2);
 
-
-        DisplayTestData displayTestData=new DisplayTestData();
-        displayTestData.setDisplay_avatar(R.drawable.display_user_img_gwen);
-        displayTestData.setDisplay_img(list_img);
-        displayTestData.setDisplay_userName("YSLC");
-        displayTestData.setDisplay_title("i9-14900k+RTX4090 超级生产力");
-        displayTestData.setDisplay_user_price("￥11999");
-        displayTestData.setDisplay_user_ThumbsUpNun("999");
-        list.add(displayTestData);
-
-        DisplayTestData displayTestData1=new DisplayTestData();
-        displayTestData1.setDisplay_avatar(R.drawable.nvidia_4060);
-        displayTestData1.setDisplay_img(list_img);
-        displayTestData1.setDisplay_userName("XHX");
-        displayTestData1.setDisplay_user_price("￥4699");
-        displayTestData1.setDisplay_title("i5-12490k+RTX4060ti" +"牙膏是要挤的，但是性能还是够的");
-        displayTestData1.setDisplay_user_ThumbsUpNun("999");
-        list.add(displayTestData1);
-
-        DisplayTestData displayTestData2=new DisplayTestData();
-        displayTestData2.setDisplay_avatar(R.drawable.nvidia_4060);
-        displayTestData2.setDisplay_img(list_img);
-        displayTestData2.setDisplay_userName("XHX");
-        displayTestData2.setDisplay_user_price("￥4699");
-        displayTestData2.setDisplay_title("i5-12490k+RTX4060ti" +"牙膏是要挤的，但是性能还是够的");
-        displayTestData2.setDisplay_user_ThumbsUpNun("999");
-        list.add(displayTestData2);
     }
 }
