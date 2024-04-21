@@ -95,11 +95,18 @@ public class ChoiceActivity extends AppCompatActivity {
 
         PartsTestData partsTestData3 = new PartsTestData();
         partsTestData3.setPartImage(R.drawable.nvidia_4060);
-        partsTestData3.setPartName("RTX4060");
+        partsTestData3.setPartName("铭瑄电竞之心");
         partsTestData3.setPartParameter("这真的是2023的甜品卡吗?");
         partsTestData3.setPartPrice(2199);
 
+        PartsTestData partsTestData4 = new PartsTestData();
+        partsTestData4.setPartImage(R.drawable.nvidia_4060);
+        partsTestData4.setPartName("瑷珈4060ti");
+        partsTestData4.setPartParameter("二次元甜品卡吗?");
+        partsTestData4.setPartPrice(2399);
+
         graphics.add(partsTestData3);
+        graphics.add(partsTestData4);
 
 
     }

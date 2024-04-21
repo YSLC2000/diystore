@@ -128,11 +128,12 @@ public class BlankFragmentUser extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
 
-        loadData();
+
         orderRecycleView = view.findViewById(R.id.order_recycleview);
         orderRecycleView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         orderRecycleView.setAdapter(orderAdapter);
         orderRecycleView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
+        loadData();
         orderAdapter.setOnItemClickListener(new OrderAdapter.onItemClickListener() {
             @Override
             public void onItemClick(OrderData orderData, int position) {
@@ -151,7 +152,8 @@ public class BlankFragmentUser extends Fragment {
             @Override
             public int share(OrderData orderData, int position) {
                 String sysTime = String.valueOf(System.currentTimeMillis());
-                int row = OrderDataBase.getInstance(getActivity()).addShare("XHX",sysTime,"i5-12490k+RTX4060ti 牙膏是要挤的，但是性能还是够的","究极力量","R.drawable.nvidia_4060",String.valueOf(orderData.getOrder_price()),999);
+                String user_name=UserInfo.getsUserInfo().getUsername();
+                int row = OrderDataBase.getInstance(getActivity()).addShare(user_name,sysTime,"i5-12490k+RTX4060ti 牙膏是要挤的，但是性能还是够的","究极力量","R.drawable.nvidia_4060",String.valueOf(orderData.getOrder_price()),999);
                 loadData();
                 return row;
             }
@@ -160,8 +162,9 @@ public class BlankFragmentUser extends Fragment {
 
 
     public void loadData() {
-        Integer login_id = UserInfo.sUserInfo.getUser_id();
-        List<OrderData> list = OrderDataBase.instance.queryCarList(login_id.toString());
+        String login_name = UserInfo.sUserInfo.getUsername();
+        List<OrderData> list = OrderDataBase.instance.queryCarList(login_name);
         orderAdapter.setOrderAdapter(list,getActivity());
+        orderRecycleView.setAdapter(orderAdapter);
     }
 }

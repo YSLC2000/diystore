@@ -7,6 +7,45 @@ public class PartsTestData implements Serializable {
     private String partParameter;
     private Integer partImage;
     private Integer partPrice;
+    private String partTime;
+    private String partType;
+    public PartsTestData(){
+
+    }
+    public PartsTestData(String partName,String partParameter,String partType,Integer partPrice,String partTime){
+        this.partName=partName;
+        this.partParameter=partParameter;
+        this.partType=partType;
+        this.partPrice=partPrice;
+        this.partTime=partTime;
+    }
+
+    public String getPartTime() {
+        return partTime;
+    }
+
+    public void setPartTime(String partTime) {
+        this.partTime = partTime;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public Integer getPartId() {
+        return partId;
+    }
+
+    public void setPartId(Integer partId) {
+        this.partId = partId;
+    }
+
+    private String type;
+    private Integer partId;
 
     public Integer getPartPrice() {
         return partPrice;
@@ -48,6 +87,9 @@ public class PartsTestData implements Serializable {
                 ", partParameter='" + partParameter + '\'' +
                 ", partImage=" + partImage +
                 ", partPrice=" + partPrice +
+                ", partTime='" + partTime + '\'' +
+                ", type='" + type + '\'' +
+                ", partId=" + partId +
                 '}';
     }
 }

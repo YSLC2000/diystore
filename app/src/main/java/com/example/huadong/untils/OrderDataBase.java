@@ -15,6 +15,7 @@ import com.example.huadong.R;
 import com.example.huadong.been.DisplayListTestData;
 import com.example.huadong.been.DisplayTestData;
 import com.example.huadong.been.OrderData;
+import com.example.huadong.been.PartsTestData;
 import com.example.huadong.been.UserInfo;
 
 import org.json.JSONException;
@@ -57,7 +58,10 @@ public class OrderDataBase extends SQLiteOpenHelper {
         db.execSQL("create table share_table(user_name text,share_id varchar(32),share_name varchar(32),order_name varchar(32),user_img varchar(32),share_price int," +
                 "share_num int"+
                 ")");
-        db.execSQL("create table parts_table(parts_name text,parts_id int,parts_img varchar(32),parts_type varchar(32),parts_parameter varchar(32))");
+        db.execSQL("create table part_table(part_name text,part_id int,part_img varchar(32),part_type varchar(32),part_parameter varchar(32),part_time varchar(32),"+
+                "part_price int"+
+                ")");
+
     }
 
 
@@ -252,5 +256,46 @@ public class OrderDataBase extends SQLiteOpenHelper {
     @SuppressLint("Range")
     public void thumbsUp(){
         SQLiteDatabase db=getWritableDatabase();
+    }
+    /**
+     * 配件数据注入
+     * db.execSQL("create table part_table(part_name text,part_id int,part_img varchar(32),part_type varchar(32),part_parameter varchar(32),part_time varchar(32),part_price int)");
+     */
+    public int infoParts(String part_name,int part_id,int part_img,String part_type,String part_parameter,String part_time,int part_price){
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("part_name",part_name);
+        values.put("part_id", part_id);
+        values.put("part_img", part_img);
+        values.put("part_type",part_type);
+        values.put("part_parameter", part_parameter);
+        values.put("part_time",part_time);
+        values.put("part_price",part_price);
+        String nullData = "values(null,?,?,?,?,?,?,?)";
+        int insert = (int) db.insert("part_table", nullData, values);
+//        db.close();
+        return insert;
+    }
+    /**
+     * 通过配件名称查找其他参数
+     */
+    @SuppressLint("Range")
+    public PartsTestData partsArgument(String part_name){
+        SQLiteDatabase db=getReadableDatabase();
+        PartsTestData partsTestData =null;
+        String sql = "select part_name,part_type,part_parameter,part_time,part_price  from part_table where part_name=?";
+        String[] str ={part_name};
+        Cursor cursor = db.rawQuery(sql,str);
+        if(cursor.moveToNext()){
+           String partName = cursor.getString(cursor.getColumnIndex("part_name"));
+           String partType = cursor.getString(cursor.getColumnIndex("part_type"));
+           String partParameter = cursor.getString(cursor.getColumnIndex("part_parameter"));
+           String partTime =cursor.getString(cursor.getColumnIndex("part_time"));
+           int partPrice =cursor.getInt(cursor.getColumnIndex("part_price"));
+           partsTestData=new PartsTestData(partName,partParameter,partType,partPrice,partTime);
+        }
+        cursor.close();
+//        db.close();
+        return partsTestData;
     }
 }

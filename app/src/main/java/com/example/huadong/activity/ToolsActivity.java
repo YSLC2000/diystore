@@ -103,7 +103,7 @@ public class ToolsActivity extends AppCompatActivity {
                 }
                 String sysTime = String.valueOf(System.currentTimeMillis());
                 String order_name =editText.getText().toString();
-                String user_id= UserInfo.sUserInfo.getUsername();
+                String user_id = UserInfo.sUserInfo.getUsername();
                 String cpu =list.get(0).toString();
                 String mainBoard =list.get(1).toString();
                 String graphics = list.get(2).toString();
@@ -112,13 +112,18 @@ public class ToolsActivity extends AppCompatActivity {
                 String hardDisk = list.get(5).toString();
                 String radiator= list.get(6).toString();
                 String chassis =list.get(7).toString();
-                int row = OrderDataBase.getInstance(ToolsActivity.this).addOrders(user_id,sysTime,order_name,cpu,mainBoard,graphics,memorySticks,power,hardDisk,radiator,chassis,19999);
-                if (row > 0) {
-                    Toast.makeText(ToolsActivity.this, "添加成功", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(ToolsActivity.this, "失败", Toast.LENGTH_SHORT).show();
+                if(!order_name.isEmpty()){
+                    int row = OrderDataBase.getInstance(ToolsActivity.this).addOrders(user_id,sysTime,order_name,cpu,mainBoard,graphics,memorySticks,power,hardDisk,radiator,chassis,19999);
+                    if (row > 0) {
+                        Toast.makeText(ToolsActivity.this, "添加成功", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(ToolsActivity.this, "失败", Toast.LENGTH_SHORT).show();
+                    }
+                    finish();
+                }else {
+                   Toast.makeText(ToolsActivity.this,"标题不能为空",Toast.LENGTH_SHORT).show();
                 }
-                finish();
+
             }
         });
         mToolsRecycleView = findViewById(R.id.recyclerView);
