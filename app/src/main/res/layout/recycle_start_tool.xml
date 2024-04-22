@@ -34,6 +34,13 @@
             app:layout_constraintStart_toEndOf="@+id/tools_img"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <TextView
+            android:id="@+id/price"
+            android:layout_width="40dp"
+            android:layout_height="24dp"
+            tools:layout_editor_absoluteX="156dp"
+            tools:layout_editor_absoluteY="8dp" />
+
         <Button
             android:id="@+id/tools_btn"
             android:layout_width="80dp"

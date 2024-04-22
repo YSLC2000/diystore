@@ -2,8 +2,6 @@ package com.example.huadong.been;
 
 public class OrderTestData {
 
-    public static class OrderNameDTO {
-
         private String cpu;
 
         private String mianboard;
@@ -19,6 +17,20 @@ public class OrderTestData {
         private String radiator;
 
         private String chassis;
+        public OrderTestData(){
+
+        }
+        public OrderTestData(String cpu,String mianboard,String graphics,String memorysticks,String power,String harddisk,String radiator,String chassis){
+            this.cpu=cpu;
+            this.mianboard=mianboard;
+            this.graphics=graphics;
+            this.memorysticks=memorysticks;
+            this.power=power;
+            this.harddisk=harddisk;
+            this.radiator=radiator;
+            this.chassis=chassis;
+
+        }
 
         public String getCpu() {
             return cpu;
@@ -84,18 +96,17 @@ public class OrderTestData {
             this.chassis = chassis;
         }
 
-        @Override
-        public String toString() {
-            return "OrderNameDTO{" +
-                    "cpu='" + cpu + '\'' +
-                    ", mianboard='" + mianboard + '\'' +
-                    ", graphics='" + graphics + '\'' +
-                    ", memorysticks='" + memorysticks + '\'' +
-                    ", power='" + power + '\'' +
-                    ", harddisk='" + harddisk + '\'' +
-                    ", radiator='" + radiator + '\'' +
-                    ", chassis='" + chassis + '\'' +
-                    '}';
-        }
+    @Override
+    public String toString() {
+        return "OrderTestData{" +
+                "cpu='" + cpu + '\'' +
+                ", mianboard='" + mianboard + '\'' +
+                ", graphics='" + graphics + '\'' +
+                ", memorysticks='" + memorysticks + '\'' +
+                ", power='" + power + '\'' +
+                ", harddisk='" + harddisk + '\'' +
+                ", radiator='" + radiator + '\'' +
+                ", chassis='" + chassis + '\'' +
+                '}';
     }
 }

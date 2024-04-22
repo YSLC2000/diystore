@@ -34,7 +34,7 @@ public class BlankFragmentHome extends Fragment {
     public Banner banner;
     private RecyclerView homeRecycleView;
     private List<HomeTestData> list =new ArrayList<>();
-    private final HomeAdapter homeAdapter=new HomeAdapter(list);
+
     private final List<Integer> banner_data =new ArrayList<Integer>();
 
 
@@ -108,7 +108,7 @@ public class BlankFragmentHome extends Fragment {
         homeTestData2.setHomeDay("2024/1/17");
         homeTestData2.setHomeNum(999);
         HomeTestData homeTestData3 =new HomeTestData();
-        homeTestData3.setHomeTitle("6750gre跨阶级对决4060ti，谁强孰弱？");
+        homeTestData3.setHomeTitle("6750gre究极对决4060，谁强孰弱？");
         homeTestData3.setHomeImage(R.drawable.amd_6750gre);
         homeTestData3.setHomeDay("2024/3/15");
         homeTestData.setHomeNum(999);
@@ -124,12 +124,10 @@ public class BlankFragmentHome extends Fragment {
         list.add(homeTestData4);
 
     }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+    private void bannerInit(View view){
         homeRecycleView=view.findViewById(R.id.home_recycleView);
         homeRecycleView.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false));
+        HomeAdapter homeAdapter=new HomeAdapter(list,getActivity());
         homeRecycleView.setAdapter(homeAdapter);
         DateInit();
         banner_data.add(R.drawable.intel_cpu);
@@ -138,7 +136,6 @@ public class BlankFragmentHome extends Fragment {
         banner_data.add(R.drawable.nvidia_4060);
         banner= view.findViewById(R.id.start_banner);
         banner.setAdapter(new BannerImageAdapter<Integer>(banner_data) {
-
             @Override
             public void onBindView(BannerImageHolder holder, Integer data, int position, int size) {
                 holder.imageView.setImageResource(data);
@@ -150,5 +147,12 @@ public class BlankFragmentHome extends Fragment {
         banner.setIndicatorSelectedColor(Color.GREEN);
         banner.start();
         // Inflate the layout for this fragment
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        bannerInit(view);
+
     }
 }

@@ -15,6 +15,7 @@ import com.example.huadong.R;
 import com.example.huadong.been.DisplayListTestData;
 import com.example.huadong.been.DisplayTestData;
 import com.example.huadong.been.OrderData;
+import com.example.huadong.been.OrderTestData;
 import com.example.huadong.been.PartsTestData;
 import com.example.huadong.been.UserInfo;
 
@@ -298,4 +299,36 @@ public class OrderDataBase extends SQLiteOpenHelper {
 //        db.close();
         return partsTestData;
     }
+    /**
+     * 通过订单名称将其其中配件名称装入列表
+     */
+    @SuppressLint("Range")
+     public List<String> selectPart(String order_name){
+        List<String> list =new ArrayList<>();
+         SQLiteDatabase db =getReadableDatabase();
+//         OrderTestData orderTestData =null;
+         String sql ="select cpu,mainBoard,graphics,memorySticks,power,hardDisk,radiator,chassis from order_table where order_name=?";
+         String[] str  ={order_name};
+         Cursor cursor =db.rawQuery(sql,str);
+         if(cursor.moveToNext()){
+             String cpu =cursor.getString(cursor.getColumnIndex("cpu"));
+             String mainBoard =cursor.getString(cursor.getColumnIndex("mainBoard"));
+             String graphics =cursor.getString(cursor.getColumnIndex("graphics"));
+             String memorySticks =cursor.getString(cursor.getColumnIndex("memorySticks"));
+             String power =cursor.getString(cursor.getColumnIndex("power"));
+             String hardDisk =cursor.getString(cursor.getColumnIndex("hardDisk"));
+             String radiator =cursor.getString(cursor.getColumnIndex("radiator"));
+             String chassis =cursor.getString(cursor.getColumnIndex("chassis"));
+//             orderTestData =new OrderTestData(cpu,mainBoard,graphics,memorySticks,power,hardDisk,radiator,chassis);
+             list.add(cpu);
+             list.add(mainBoard);
+             list.add(graphics);
+             list.add(memorySticks);
+             list.add(power);
+             list.add(hardDisk);
+             list.add(radiator);
+             list.add(chassis);
+         }
+         return list;
+     }
 }

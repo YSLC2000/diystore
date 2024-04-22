@@ -1,12 +1,10 @@
 package com.example.huadong.recycleView;
 
 
-import static androidx.core.app.ActivityCompat.startActivityForResult;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,6 +29,8 @@ public class ToolsAdapter extends RecyclerView.Adapter<ToolsAdapter.ViewHolder> 
     private Context mcontext;
     private PartsTestData result;
     private CallBack callBack;
+
+
 
 
     List<ToolsTestData> list = new ArrayList<>();
@@ -78,9 +78,10 @@ public class ToolsAdapter extends RecyclerView.Adapter<ToolsAdapter.ViewHolder> 
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         ImageView imageView;
-        TextView textView;
+        TextView textView,textView2;
         Button button;
         ConstraintLayout constraintLayout;
+
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -88,19 +89,26 @@ public class ToolsAdapter extends RecyclerView.Adapter<ToolsAdapter.ViewHolder> 
             textView = itemView.findViewById(R.id.tools_title);
             button = itemView.findViewById(R.id.tools_btn);
             constraintLayout = itemView.findViewById(R.id.item);
+            textView2 =itemView.findViewById(R.id.price);
         }
 
         public void upData(PartsTestData partsTestData) {
+
             //更新recycleView中的对应项内容
             ViewGroup.LayoutParams layoutParams = textView.getLayoutParams();
+            ViewGroup.LayoutParams layoutParams1 =textView2.getLayoutParams();
             layoutParams.height = 100;
+            layoutParams1.height =100;
 //            int widthMeasureSpec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
 //            int heightMeasureSpec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
 //            textView.measure(widthMeasureSpec, heightMeasureSpec);
 //            int width = textView.getMeasuredWidth();
 //            layoutParams.width = width;
             textView.setLayoutParams(layoutParams);
-            textView.setX(150);
+            textView2.setLayoutParams(layoutParams1);
+            textView.setX(250);
+            textView2.setX(450);
+            textView2.setY(30);
 //            textView.post(new Runnable() {
 //                @Override
 //                public void run() {
@@ -109,6 +117,8 @@ public class ToolsAdapter extends RecyclerView.Adapter<ToolsAdapter.ViewHolder> 
 //                }
 //            });
             textView.setText(partsTestData.getPartName());
+            textView2.setText(partsTestData.getPartPrice()+"");
+            textView2.setTextColor(Color.parseColor("#FF0000"));
             ViewGroup.LayoutParams img = imageView.getLayoutParams();
             img.width = 100;
             img.height = 100;

@@ -153,6 +153,7 @@ public class ToolsActivity extends AppCompatActivity {
                 Integer position = data.getIntExtra("backPosition", 0);
                 Toast.makeText(this, result + "添加成功", Toast.LENGTH_SHORT).show();
                 Log.d("backPosition", position.toString());
+                Log.d("backPosition", result.toString());
                 ToolsAdapter.ViewHolder viewHolder = (ToolsAdapter.ViewHolder) mToolsRecycleView.findViewHolderForAdapterPosition(position);
                 if (viewHolder instanceof ToolsAdapter.ViewHolder) {
                     ToolsAdapter.ViewHolder custer = (ToolsAdapter.ViewHolder) viewHolder;

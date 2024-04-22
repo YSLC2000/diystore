@@ -78,7 +78,6 @@ public class MainActivity extends AppCompatActivity {
                 } else if (item.getItemId() == R.id.menu_user) {
                     userFragment.loadData();
                     viewPager.setCurrentItem(3);
-
                 }
                 return true;
             }

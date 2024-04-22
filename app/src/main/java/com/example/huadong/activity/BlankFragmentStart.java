@@ -73,11 +73,10 @@ public class BlankFragmentStart extends Fragment {
             public void onClick(View v) {
                 long timestamp = System.currentTimeMillis();
                 int time =(int)timestamp;
-                OrderDataBase.getInstance(getActivity()).infoParts("瑷珈4060ti",time,R.drawable.nvidia_4060,"显卡","RTX 4060 Ti 是一款显卡，拥有 4352 CUDA 核心，配备 8GB / 16GB 128bit GDDR6 显存，TGP 功耗 160W / 165W，采用 PCIe 4.08 连接，售价 3199 元起，5 月 24 日开卖。 RTX 4060 显卡拥有 3072 CUDA 核心，配备 8GB GDDR6 128bit 显存，功耗 115W，采用 PCIe 4.08 连接，售价 2399 元起，7 月上市","2023/7",2399);
-                OrderDataBase.getInstance(getActivity()).infoParts("铭瑄电竞之心",time,R.drawable.nvidia_4060,"显卡","铭瑄电竞之心","2023/7",2199);
-                OrderDataBase.getInstance(getActivity()).infoParts("铭瑄电竞终结者",time,R.drawable.nvidia_4060,"显卡","铭瑄电竞终结者","2023/7",2399);
-                OrderDataBase.getInstance(getActivity()).infoParts("猛禽",time,R.drawable.nvidia_4060,"显卡","猛禽","2023/7",2499);
-                Log.d("点击了","点击了按钮");
+//                OrderDataBase.getInstance(getActivity()).infoParts("瑷珈4060ti",time,R.drawable.nvidia_4060,"显卡","RTX 4060 Ti 是一款显卡，拥有 4352 CUDA 核心，配备 8GB / 16GB 128bit GDDR6 显存，TGP 功耗 160W / 165W，采用 PCIe 4.08 连接，售价 3199 元起，5 月 24 日开卖。 RTX 4060 显卡拥有 3072 CUDA 核心，配备 8GB GDDR6 128bit 显存，功耗 115W，采用 PCIe 4.08 连接，售价 2399 元起，7 月上市","2023/7",2399);
+//                OrderDataBase.getInstance(getActivity()).infoParts("铭瑄电竞之心",time,R.drawable.nvidia_4060,"显卡","铭瑄电竞之心","2023/7",2199);
+//                OrderDataBase.getInstance(getActivity()).infoParts("铭瑄电竞终结者",time,R.drawable.nvidia_4060,"显卡","铭瑄电竞终结者","2023/7",2399);
+//                OrderDataBase.getInstance(getActivity()).infoParts("猛禽",time,R.drawable.nvidia_4060,"显卡","猛禽","2023/7",2499);
                 Intent intent =new Intent(getActivity(),ToolsActivity.class);
                 startActivity(intent);
             }

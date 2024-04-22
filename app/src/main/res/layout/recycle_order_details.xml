@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="150dp">
+
+    <ImageView
+        android:id="@+id/part_img"
+        android:layout_width="92dp"
+        android:layout_height="87dp"
+        android:layout_marginStart="4dp"
+        android:src="@drawable/nvidia_4060"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/part_name"
+        android:layout_width="112dp"
+        android:layout_height="29dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
+        android:text="4060ti"
+        app:layout_constraintStart_toEndOf="@+id/part_img"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/part_parameter"
+        android:layout_width="156dp"
+        android:layout_height="74dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:text="RTX 4060 Ti 是一款显卡，拥有 4352 CUDA 核心，配备 8GB / 16GB 128bit GDDR6 显存，TGP 功耗 160W / 165W，采用 PCIe 4.08 连接，售价 3199 元起，5 月 24 日开卖。 RTX 4060 显卡拥有 3072 CUDA 核心，配备 8GB GDDR6 128bit 显存，功耗 115W，采用 PCIe 4.08 连接，售价 2399 元起，7 月上市"
+        app:layout_constraintStart_toEndOf="@+id/part_img"
+        app:layout_constraintTop_toBottomOf="@+id/part_name" />
+
+    <TextView
+        android:layout_width="29dp"
+        android:layout_height="29dp"
+        android:layout_marginBottom="4dp"
+        android:gravity="center"
+        android:text="￥"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/part_price" />
+
+    <TextView
+        android:id="@+id/part_price"
+        android:layout_width="68dp"
+        android:layout_height="29dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginBottom="4dp"
+        android:gravity="center"
+        android:text="2199"
+        android:textColor="@color/red"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

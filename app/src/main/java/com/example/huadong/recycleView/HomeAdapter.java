@@ -1,5 +1,7 @@
 package com.example.huadong.recycleView;
 
+import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,16 +12,19 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.huadong.R;
+import com.example.huadong.activity.RecommendActivity;
 import com.example.huadong.been.HomeTestData;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.myViewHodler> {
+    private Context mcontext;
     List<HomeTestData> list = new ArrayList<>();
 
-    public HomeAdapter(List<HomeTestData> list) {
+    public HomeAdapter(List<HomeTestData> list, Context context) {
         this.list = list;
+        this.mcontext = context;
     }
 
     @NonNull
@@ -36,6 +41,14 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.myViewHodler> 
         holder.title.setText(homeTestData.getHomeTitle());
         holder.imageView.setImageResource(homeTestData.getHomeImage());
         holder.day.setText(homeTestData.getHomeDay());
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mcontext, RecommendActivity.class);
+                intent.putExtra("name",homeTestData.getHomeTitle());
+                mcontext.startActivity(intent);
+            }
+        });
 
     }
 
