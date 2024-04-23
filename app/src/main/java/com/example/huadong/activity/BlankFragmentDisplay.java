@@ -102,7 +102,7 @@ public class BlankFragmentDisplay extends Fragment {
 //        DataInit();
         list= OrderDataBase.getInstance(getActivity()).share_display();
         Log.d("DataInit",list.toString());
-        displayAdapter = new DisplayAdapter(list);
+        displayAdapter = new DisplayAdapter(list,getActivity());
         btn_flush.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

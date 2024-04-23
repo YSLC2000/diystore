@@ -1,6 +1,8 @@
 package com.example.huadong.recycleView;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.huadong.R;
+import com.example.huadong.activity.CommentActivity;
 import com.example.huadong.been.DisplayListTestData;
 import com.example.huadong.been.DisplayTestData;
 import com.example.huadong.been.OrderData;
@@ -22,8 +25,9 @@ import java.util.List;
 public class DisplayAdapter extends RecyclerView.Adapter<DisplayAdapter.myViewHodler> {
     Context context;
     private List<DisplayTestData> list =new ArrayList<>();
-    public DisplayAdapter(List line){
+    public DisplayAdapter(List line,Context context){
         this.list=line;
+        this.context=context;
     }
     public void setDisplayAdapter(List<DisplayTestData> list, Context context) {
         this.list = list;
@@ -48,6 +52,15 @@ public class DisplayAdapter extends RecyclerView.Adapter<DisplayAdapter.myViewHo
         holder.display_user_price.setText(displayTestData.getDisplay_user_price());
         holder.display_user_ThumbsUp.setText(displayTestData.getDisplay_user_ThumbsUpNun()+"");
         holder.childRecycle.setAdapter(new DisplayListAdapter(displayListTestData));
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(context, CommentActivity.class);
+                Activity activity = (Activity) context;
+                activity.startActivity(intent);
+            }
+        });
+
     }
 
     @Override

@@ -304,7 +304,7 @@ public class OrderDataBase extends SQLiteOpenHelper {
      */
     @SuppressLint("Range")
      public List<String> selectPart(String order_name){
-        List<String> list =new ArrayList<>();
+         List<String> list =new ArrayList<>();
          SQLiteDatabase db =getReadableDatabase();
 //         OrderTestData orderTestData =null;
          String sql ="select cpu,mainBoard,graphics,memorySticks,power,hardDisk,radiator,chassis from order_table where order_name=?";
@@ -330,5 +330,14 @@ public class OrderDataBase extends SQLiteOpenHelper {
              list.add(chassis);
          }
          return list;
+     }
+
+    /**
+     *通过分享号获取评论界面内容
+     */
+     @SuppressLint("Range")
+     public List<String> comments(){
+         List<String> list =new ArrayList<>();
+        return list;
      }
 }
