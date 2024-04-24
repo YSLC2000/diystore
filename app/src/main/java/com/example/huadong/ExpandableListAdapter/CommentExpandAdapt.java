@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.huadong.R;
 import com.example.huadong.been.CommentDetailBean;
 import com.example.huadong.been.ReplyDetailBean;
+import com.example.huadong.been.UserInfo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -84,8 +85,12 @@ public class CommentExpandAdapt extends BaseExpandableListAdapter {
             groupView = (GroupView) convertView.getTag();
         }
         CommentDetailBean commentDetailBean1 = list.get(groupPosition);
-        groupView.bindData(commentDetailBean1);
+        Log.d("commentDetailBean1",commentDetailBean1.toString());
 
+        groupView.tv_name.setText(commentDetailBean1.getCommentName());
+        groupView.tv_content.setText(commentDetailBean1.getContent());
+        groupView.tv_time.setText("2024/4/24");
+        groupView.imageView.setImageResource(R.drawable.display_user_img_gwen);
         return convertView;
     }
 
@@ -100,16 +105,20 @@ public class CommentExpandAdapt extends BaseExpandableListAdapter {
         }else{
             childView =(ChildView) convertView.getTag();
         }
-        String replayName = list.get(groupPosition).getReplyList().get(childPosition).getNickName();
+            String replayName = list.get(groupPosition).getReplyList().get(childPosition).getNickName();
+        Log.d("replayName",replayName);
+        Log.d("replayName",list.toString());
         if(!TextUtils.isEmpty(replayName)){
             childView.tv_name.setText(replayName);
         }else {
             childView.tv_name.setText("无名");
         }
+        List<ReplyDetailBean> replyDetailBean = list.get(groupPosition).getReplyList();
+        Log.d("commentDetailBean",replyDetailBean.toString());
 //        childView.tv_name.setText(list.get(groupPosition).getReplyList().get(childPosition).getNickName());
 //        childView.tv_content.setText(list.get(groupPosition).getReplyList().get(childPosition).getContent());
-        childView.tv_name.setText("是我");
-        childView.tv_content.setText("你好呀");
+        childView.tv_name.setText(replyDetailBean.get(childPosition).getCommentName());
+        childView.tv_content.setText(replyDetailBean.get(childPosition).getCommentContent());
         return convertView;
     }
 
@@ -126,16 +135,13 @@ public class CommentExpandAdapt extends BaseExpandableListAdapter {
 
         public GroupView(View view) {
             imageView = view.findViewById(R.id.item_img);
-            tv_content = (TextView) view.findViewById(R.id.item_name);
-            tv_name = (TextView) view.findViewById(R.id.item_data);
+            tv_content = (TextView) view.findViewById(R.id.item_data);
+            tv_name = (TextView) view.findViewById(R.id.item_name);
             tv_time = (TextView) view.findViewById(R.id.item_time);
 //            recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView2);
         }
         public void bindData(CommentDetailBean commentDetailBean){
-            tv_content.setText(commentDetailBean.getContent());
-            tv_name.setText(commentDetailBean.getNickName());
-            tv_time.setText("2024/4/24");
-            imageView.setImageResource(R.drawable.display_user_img_gwen);
+
         }
     }
     public  class ChildView{
@@ -168,7 +174,7 @@ public class CommentExpandAdapt extends BaseExpandableListAdapter {
      */
     public void addTheReplyData(ReplyDetailBean replyDetailBean, int groupPosition){
         if(replyDetailBean!=null){
-            Log.d("expandAdapt","addTheReplyData: >>>>该刷新回复列表了:"+replyDetailBean.toString() );
+            Log.d("expandAdapt","addTheReplyData: >>>>该刷新回复列表了:"+replyDetailBean.getCommentContent());
             if(list.get(groupPosition).getReplyList() != null ){
                 list.get(groupPosition).getReplyList().add(replyDetailBean);
             }else {

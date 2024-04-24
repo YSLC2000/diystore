@@ -3,6 +3,7 @@ package com.example.huadong.activity;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.media.Image;
 import android.os.Bundle;
@@ -26,7 +27,11 @@ import com.example.huadong.ExpandableListAdapter.CommentExpandAdapt;
 import com.example.huadong.R;
 import com.example.huadong.been.CommentBean;
 import com.example.huadong.been.CommentDetailBean;
+import com.example.huadong.been.CommentInfo;
 import com.example.huadong.been.ReplyDetailBean;
+import com.example.huadong.been.ReplyInfo;
+import com.example.huadong.been.UserInfo;
+import com.example.huadong.untils.OrderDataBase;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
@@ -38,10 +43,13 @@ public class CommentActivity extends AppCompatActivity{
     private ExpandableListView expandableListView;
     private CommentBean commentBean;
     private List<CommentDetailBean> list =new ArrayList<>();
+    private List<CommentInfo> commentInfo_data= new ArrayList<>();
+    List<CommentDetailBean> commentDetailBeans;
     private BottomSheetDialog dialog;
     private TextView textView,content,share;
     private ImageView imageView;
     private Toolbar toolbar;
+    private String user_name,share_name;
 
 
 
@@ -50,24 +58,44 @@ public class CommentActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_comment);
         expandableListView =findViewById(R.id.comment_list);
-        CommentDetailBean commentBean1 =new CommentDetailBean("小明","你还是","不久前");
-        CommentDetailBean commentBean2 =new CommentDetailBean("小芳","不是我","不久前");
-        CommentDetailBean commentBean4 =new CommentDetailBean("芜湖","密斯卡","莫斯卡");
-        CommentDetailBean commentBean3 =new CommentDetailBean("是我","还是我","不久前");
-        CommentDetailBean commentBean5 =new CommentDetailBean("还好","还是我","不久前");
-        list.add(commentBean1);
-        list.add(commentBean2);
-        list.add(commentBean4);
-        list.add(commentBean3);
-        list.add(commentBean5);
+        Intent intent=getIntent();
+        user_name = intent.getStringExtra("username");
+        share_name =intent.getStringExtra("ordername");
+//        commentInfo_data = OrderDataBase.getInstance(CommentActivity.this).getCommentInfo(user_name,share_name);
+//        commentDetailBeans =OrderDataBase.getInstance(CommentActivity.this).getComment( UserInfo.sUserInfo.getUsername(), share_name);//UserInfo.sUserInfo.getUsername()
+//                OrderDataBase.getInstance(CommentActivity.this).getCommentDetailBean("1","TESt");
+//        Log.d("commentDetailBeans",commentDetailBeans.toString());
+
+//        for(int i=0;i<commentInfo_data.size();i++){
+//            //获取comment的name
+//            String name=commentInfo_data.get(i).getUser_name();
+//            String content= commentInfo_data.get(i).getComment_content();
+//            String time=commentInfo_data.get(i).getComment_time();
+//            //获取reply的name
+//            String commentName =commentInfo_data.get(i).getComment_name();
+//            List<ReplyDetailBean> replyDetailBeans =new ArrayList<>();
+//            List<ReplyInfo> reply=OrderDataBase.getInstance(CommentActivity.this).getReply(name,content);
+//            for (int j = 0; j<reply.size(); j++){
+//                String comment_name =reply.get(j).getComment_name();
+//                String comment_content =reply.get(j).getReplay_content();
+//                ReplyDetailBean replyDetailBean =new ReplyDetailBean(comment_name,comment_content);
+//                replyDetailBeans.add(replyDetailBean);
+//            }
+//            CommentDetailBean commentBean =new CommentDetailBean(name,content,time,commentName,replyDetailBeans);
+//            list.add(commentBean);
+//        }
+//        Log.d("list数据",list.toString());
+        list=OrderDataBase.getInstance(CommentActivity.this).getCommentDetailBean(user_name,share_name);
         initExpandableListView(list);
         textView=findViewById(R.id.textView9);
+        textView.setText(user_name);
         toolbar=findViewById(R.id.comment_back);
         share=findViewById(R.id.detail_page_do_comment);
         share.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showCommentDialog();
+
             }
         });
         toolbar.setOnClickListener(new View.OnClickListener() {
@@ -76,15 +104,9 @@ public class CommentActivity extends AppCompatActivity{
                 finish();
             }
         });
-        textView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showCommentDialog();
-            }
-        });
         imageView=findViewById(R.id.imageView4);
         content=findViewById(R.id.textView10);
-        content.setText("这是一些测试数据这是一些测试数据这是一些测试数据这是一些测试数据这是一些测试数据这是一些测试数据");
+        content.setText(share_name);
         imageView.setImageResource(R.drawable.display_user_img_gwen);
 
     }
@@ -94,22 +116,25 @@ public class CommentActivity extends AppCompatActivity{
     private void initExpandableListView( List<CommentDetailBean> commentList){
         expandableListView.setGroupIndicator(null);
         expandableListView.setDivider(null);
+        Log.d("CommentActivity",commentList.toString());
         //默认展开所有回复
         commentExpandAdapt = new CommentExpandAdapt(this, commentList);
         expandableListView.setAdapter(commentExpandAdapt);
         for(int i = 0; i<commentList.size(); i++){
             expandableListView.expandGroup(i);
+//
         }
         expandableListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
             @Override
             public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
-                Log.d("CommentActivity",commentList.get(groupPosition).getId()+"");
+
 //                if(isExpanded){
 //                    expandableListView.collapseGroup(groupPosition);
 //                }else {
 //                    expandableListView.expandGroup(groupPosition, true);
 //                }
-                 showReplyDialog(groupPosition);
+                showReplyDialog(groupPosition);
+                Toast.makeText(CommentActivity.this,"点击了其中一项",Toast.LENGTH_SHORT).show();
                 return true;
             }
         });
@@ -152,7 +177,7 @@ public class CommentActivity extends AppCompatActivity{
     private void showCommentDialog(){
         dialog = new BottomSheetDialog(this);
         View commentView = LayoutInflater.from(this).inflate(R.layout.expand_comment_dialog,null);
-        final EditText commentText = (EditText) commentView.findViewById(R.id.dialog_comment_et);
+         EditText commentText = (EditText) commentView.findViewById(R.id.dialog_comment_et);
         final Button bt_comment = (Button) commentView.findViewById(R.id.dialog_comment_bt);
         dialog.setContentView(commentView);
         /**
@@ -168,11 +193,19 @@ public class CommentActivity extends AppCompatActivity{
             public void onClick(View view) {
                 String commentContent = commentText.getText().toString().trim();
                 if(!TextUtils.isEmpty(commentContent)){
-
                     //commentOnWork(commentContent);
+                    OrderDataBase.getInstance(CommentActivity.this).commentsInfo((int)System.currentTimeMillis(),user_name,share_name,1,String.valueOf(System.currentTimeMillis()),String.valueOf(System.currentTimeMillis()),UserInfo.getsUserInfo().getUsername(),commentContent);
                     dialog.dismiss();
-                    CommentDetailBean detailBean = new CommentDetailBean("小明", "你还是","不久前");
-                    commentExpandAdapt.addTheCommentData(detailBean);
+//                    List<ReplyInfo> list=OrderDataBase.getInstance(CommentActivity.this).getReply(String.valueOf(1),"TEST");
+//                    List<ReplyDetailBean> list2 =new ArrayList<>();
+//                    for(int i=0;i<list.size();i++){
+//                        String str =list.get(i).getComment_name();
+//                        String str1 =list.get(i).getReplay_content();
+//                        ReplyDetailBean replyDetailBean =new ReplyDetailBean(str,str1);
+//                        list2.add(replyDetailBean);
+//                    }
+//                    CommentDetailBean detailBean = new CommentDetailBean(UserInfo.getsUserInfo().toString(), commentContent,String.valueOf(System.currentTimeMillis()),UserInfo.getsUserInfo().toString(),list2);
+//                    commentExpandAdapt.addTheCommentData(detailBean);
                     Toast.makeText(CommentActivity.this,"评论成功",Toast.LENGTH_SHORT).show();
 
                 }else {
@@ -209,20 +242,21 @@ public class CommentActivity extends AppCompatActivity{
     private void showReplyDialog(final int position){
         dialog = new BottomSheetDialog(this);
         View commentView = LayoutInflater.from(this).inflate(R.layout.expand_comment_dialog,null);
-        final EditText commentText = (EditText) commentView.findViewById(R.id.dialog_comment_et);
+         EditText commentText = (EditText) commentView.findViewById(R.id.dialog_comment_et);
         final Button bt_comment = (Button) commentView.findViewById(R.id.dialog_comment_bt);
-        commentText.setHint("回复 " + list.get(position).getNickName() + " 的评论:");
+        commentText.setHint("回复 " + list.get(position).getCommentName() + " 的评论:");
         dialog.setContentView(commentView);
         bt_comment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String replyContent = commentText.getText().toString().trim();
+                Toast.makeText(CommentActivity.this,replyContent,Toast.LENGTH_SHORT).show();
                 if(!TextUtils.isEmpty(replyContent)){
                     dialog.dismiss();
-                    ReplyDetailBean detailBean = new ReplyDetailBean("小红",replyContent);
+                    ReplyDetailBean detailBean = new ReplyDetailBean(user_name,share_name,UserInfo.sUserInfo.getUsername(), replyContent);
                     commentExpandAdapt.addTheReplyData(detailBean, position);
                     expandableListView.expandGroup(position);
-                    Toast.makeText(CommentActivity.this,"回复成功",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CommentActivity.this,replyContent,Toast.LENGTH_SHORT).show();
                 }else {
                     Toast.makeText(CommentActivity.this,"回复内容不能为空",Toast.LENGTH_SHORT).show();
                 }

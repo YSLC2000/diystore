@@ -4,18 +4,33 @@ import java.util.List;
 
 public class CommentDetailBean {
     private int id;
-    private String nickName;
+    private String nickName;//分享订单的用户名
     private String userLogo;
     private String content;
     private String imgId;
     private int replyTotal;
     private String createDate;
-    private List<ReplyDetailBean> replyList;
+    private String commentName;//评论者用户名
 
-    public CommentDetailBean(String nickName,  String content, String createDate) {
+    private List<ReplyDetailBean> replyList;//回复者用户列表
+
+    public String getCommentName() {
+        return commentName;
+    }
+    public void setCommentName(String commentName) {
+        this.commentName = commentName;
+    }
+    public CommentDetailBean(String nickName,  String createDate) {
+        this.nickName = nickName;
+        this.content = createDate;
+    }
+
+    public CommentDetailBean(String nickName,  String content, String createDate,String commentName,List<ReplyDetailBean> replyDetailBeans) {
         this.nickName = nickName;
         this.content = content;
         this.createDate = createDate;
+        this.commentName=commentName;
+        this.replyList=replyDetailBeans;
     }
 
     public void setId(int id) {
@@ -85,6 +100,7 @@ public class CommentDetailBean {
                 ", replyTotal=" + replyTotal +
                 ", createDate='" + createDate + '\'' +
                 ", replyList=" + replyList +
+                ", commentName='" + commentName + '\'' +
                 '}';
     }
 }

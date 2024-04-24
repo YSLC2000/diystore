@@ -7,6 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -39,6 +41,7 @@ public class BlankFragmentUser extends Fragment {
     OrderAdapter orderAdapter = new OrderAdapter();
 
     private RecyclerView orderRecycleView;
+    private TextView textView;
     public Button btn_manage;
 
 
@@ -117,7 +120,8 @@ public class BlankFragmentUser extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-
+        textView=view.findViewById(R.id.user_name);
+        textView.setText(UserInfo.getsUserInfo().getUsername());
 
         orderRecycleView = view.findViewById(R.id.order_recycleview);
         orderRecycleView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
@@ -144,8 +148,11 @@ public class BlankFragmentUser extends Fragment {
             public int share(OrderData orderData, int position) {
                 String sysTime = String.valueOf(System.currentTimeMillis());
                 String user_name=UserInfo.getsUserInfo().getUsername();
-                int row = OrderDataBase.getInstance(getActivity()).addShare(user_name,sysTime,"i5-12490k+RTX4060ti 牙膏是要挤的，但是性能还是够的","究极力量","R.drawable.nvidia_4060",String.valueOf(orderData.getOrder_price()),999);
+                String orderName=orderData.getOrder_name();
+                int row = OrderDataBase.getInstance(getActivity()).addShare(user_name,sysTime,orderName,"","R.drawable.nvidia_4060",String.valueOf(orderData.getOrder_price()),999);
                 loadData();
+//                OrderDataBase.getInstance(getActivity()).commentsInfo((int)System.currentTimeMillis(),user_name,orderName,1,String.valueOf(System.currentTimeMillis()),String.valueOf(System.currentTimeMillis()),"shiwo","test");
+                OrderDataBase.getInstance(getActivity()).replyInfo(1,"1","TESt","1","TESt");
                 return row;
             }
         });
@@ -153,7 +160,8 @@ public class BlankFragmentUser extends Fragment {
 
 
     public void loadData() {
-        String login_name = UserInfo.sUserInfo.getUsername();
+        UserInfo userInfo= UserInfo.getsUserInfo();
+        String login_name = userInfo.getUsername();
         List<OrderData> list = OrderDataBase.instance.queryCarList(login_name);
         orderAdapter.setOrderAdapter(list,getActivity());
         orderRecycleView.setAdapter(orderAdapter);

@@ -56,6 +56,8 @@ public class DisplayAdapter extends RecyclerView.Adapter<DisplayAdapter.myViewHo
             @Override
             public void onClick(View v) {
                 Intent intent=new Intent(context, CommentActivity.class);
+                intent.putExtra("username",displayTestData.getDisplay_userName());
+                intent.putExtra("ordername",displayTestData.getDisplay_title());
                 Activity activity = (Activity) context;
                 activity.startActivity(intent);
             }

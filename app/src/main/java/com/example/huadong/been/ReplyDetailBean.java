@@ -1,17 +1,36 @@
 package com.example.huadong.been;
 
 public class ReplyDetailBean {
-    private String nickName;
+    private String commentName,commentContent;
+    private String nickName;//回复者名字
     private String userLogo;
     private int id;
     private String commentId;
     private String content;
-    private String status;
+    private String status;//地位
     private String createDate;
 
-    public ReplyDetailBean(String nickName, String content) {
+    public ReplyDetailBean(String nickName, String content,String commentName,String commentContent) {
         this.nickName = nickName;
         this.content = content;
+        this.commentName= commentName;
+        this.commentContent=commentContent;
+    }
+
+    public String getCommentName() {
+        return commentName;
+    }
+
+    public void setCommentName(String commentName) {
+        this.commentName = commentName;
+    }
+
+    public String getCommentContent() {
+        return commentContent;
+    }
+
+    public void setCommentContent(String commentContent) {
+        this.commentContent = commentContent;
     }
 
     public void setNickName(String nickName) {
@@ -66,7 +85,9 @@ public class ReplyDetailBean {
     @Override
     public String toString() {
         return "ReplyDetailBean{" +
-                "nickName='" + nickName + '\'' +
+                "commentName='" + commentName + '\'' +
+                ", commentContent='" + commentContent + '\'' +
+                ", nickName='" + nickName + '\'' +
                 ", userLogo='" + userLogo + '\'' +
                 ", id=" + id +
                 ", commentId='" + commentId + '\'' +

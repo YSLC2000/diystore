@@ -24,12 +24,13 @@
                 android:layout_width="74dp"
                 android:layout_height="71dp"
                 android:layout_marginStart="32dp"
-                android:background="@drawable/user_avatar_img"
+                android:background="@drawable/display_user_img_gwen"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
+                android:id="@+id/user_name"
                 android:layout_width="100dp"
                 android:layout_height="30dp"
                 android:layout_marginStart="8dp"
