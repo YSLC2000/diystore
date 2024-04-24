@@ -380,78 +380,54 @@ public class OrderDataBase extends SQLiteOpenHelper {
         return insert;
     }
 
-    /**
-     * 从评论表中获取数据
-     */
-    @SuppressLint("Range")
-    public List<CommentInfo> getCommentInfo(String user_name, String share_name) {
-        List<CommentInfo> list = new ArrayList<>();
-        SQLiteDatabase db = getReadableDatabase();
-        CommentInfo commentInfo = null;
-        String sql = "select comment_id, user_name, share_name, part_img, share_time, comment_time, comment_name, comment_content from comment_table where user_name=? and share_name=?";
-        String[] str = {user_name, share_name};
-        Cursor cursor = db.rawQuery(sql, str);
-        while (cursor.moveToNext()) {
-            int commentID = cursor.getInt(cursor.getColumnIndex("comment_id"));
-            String userName = cursor.getString(cursor.getColumnIndex("user_name"));
-            String shareName = cursor.getString(cursor.getColumnIndex("share_name"));
-            int partImg = cursor.getInt(cursor.getColumnIndex("part_img"));
-            String shareTime = cursor.getString(cursor.getColumnIndex("share_time"));
-            String commentTime = cursor.getString(cursor.getColumnIndex("comment_time"));
-            String commentName = UserInfo.sUserInfo.getUsername();
-            String commentContent = cursor.getString(cursor.getColumnIndex("comment_content"));
-            commentInfo = new CommentInfo(commentID, userName, shareName, partImg, shareTime, commentTime, commentName, commentContent);
-            list.add(commentInfo);
-        }
-        return list;
-    }
+//    /**
+//     * 从评论表中获取数据
+//     */
+//    @SuppressLint("Range")
+//    public List<CommentInfo> getCommentInfo(String user_name, String share_name) {
+//        List<CommentInfo> list = new ArrayList<>();
+//        SQLiteDatabase db = getReadableDatabase();
+//        CommentInfo commentInfo = null;
+//        String sql = "select comment_id, user_name, share_name, part_img, share_time, comment_time, comment_name, comment_content from comment_table where user_name=? and share_name=?";
+//        String[] str = {user_name, share_name};
+//        Cursor cursor = db.rawQuery(sql, str);
+//        while (cursor.moveToNext()) {
+//            int commentID = cursor.getInt(cursor.getColumnIndex("comment_id"));
+//            String userName = cursor.getString(cursor.getColumnIndex("user_name"));
+//            String shareName = cursor.getString(cursor.getColumnIndex("share_name"));
+//            int partImg = cursor.getInt(cursor.getColumnIndex("part_img"));
+//            String shareTime = cursor.getString(cursor.getColumnIndex("share_time"));
+//            String commentTime = cursor.getString(cursor.getColumnIndex("comment_time"));
+//            String commentName = UserInfo.sUserInfo.getUsername();
+//            String commentContent = cursor.getString(cursor.getColumnIndex("comment_content"));
+//            commentInfo = new CommentInfo(commentID, userName, shareName, partImg, shareTime, commentTime, commentName, commentContent);
+//            list.add(commentInfo);
+//        }
+//        return list;
+//    }
 
     /**
      * 点击回复后将内容插入到回复表中
      * comment_name varchar(32),reply_name varchar(32),replay_content varchar(32)
      */
     @SuppressLint("Range")
-    public int replyInfo(int reply_id, String comment_name, String comment_content,String reply_name, String replay_content) {
+    public int replyInfo(int reply_id, String comment_name, String comment_content,String reply_name, String reply_content) {
         SQLiteDatabase db = getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put("reply_id", reply_id);
         values.put("comment_name", comment_name);
         values.put("comment_content", comment_content);
         values.put("reply_name", reply_name);
-        values.put("replay_content", replay_content);
+        values.put("reply_content", reply_content);
         String nullData = "values(null,?,?,?,?,?)";
         int insert = (int) db.insert("reply_table", nullData, values);
 //        db.close();
         return insert;
     }
-    /**
-     * 从回复表中获取对应评论的评论数据
-     */
-    @SuppressLint("Range")
-    public List<CommentDetailBean> getComment(String user_name,String share_name) {
-        List<CommentDetailBean> list = new ArrayList<>();
-        SQLiteDatabase db = getReadableDatabase();
-        CommentDetailBean commentDetailBean = null;
-        String sql = "select comment_name,comment_content from comment_table where user_name=? and share_name=?";
-        String[] str = {user_name,share_name};
-        Cursor cursor = db.rawQuery(sql, str);
-        while (cursor.moveToNext()) {
-            String commentName = cursor.getString(cursor.getColumnIndex("comment_name"));
-            String commentContent = cursor.getString(cursor.getColumnIndex("comment_content"));
-            commentDetailBean = new CommentDetailBean(commentName,commentContent);
-            list.add(commentDetailBean);
-        }
-        return list;
-    }
+
 
     /**
      *通过user_name和share_name获取CommentDetailBean列表加入到CommentExpandAdapt中
-     * @param user_name
-     * @param share_name
-     * @return
-     */
-
-    /**
      * user_name分享者用户名
      * share_name分享订单的名字
      * comment_name评论者名字
@@ -480,7 +456,7 @@ public class OrderDataBase extends SQLiteOpenHelper {
         return list;
     }
     /**
-     * 从回复表中获取对应评论的回复数据
+     * 从回复表中获取对应评论的回复数据将这些数据用集合存储
      */
     @SuppressLint("Range")
     public List<ReplyDetailBean> getReplyDetailBeans(String comment_name, String comment_content){

@@ -22,7 +22,7 @@ public class CommentDetailBean {
     }
     public CommentDetailBean(String nickName,  String createDate) {
         this.nickName = nickName;
-        this.content = createDate;
+        this.createDate = createDate;
     }
 
     public CommentDetailBean(String nickName,  String content, String createDate,String commentName,List<ReplyDetailBean> replyDetailBeans) {

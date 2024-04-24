@@ -117,8 +117,8 @@ public class CommentExpandAdapt extends BaseExpandableListAdapter {
         Log.d("commentDetailBean",replyDetailBean.toString());
 //        childView.tv_name.setText(list.get(groupPosition).getReplyList().get(childPosition).getNickName());
 //        childView.tv_content.setText(list.get(groupPosition).getReplyList().get(childPosition).getContent());
-        childView.tv_name.setText(replyDetailBean.get(childPosition).getCommentName());
-        childView.tv_content.setText(replyDetailBean.get(childPosition).getCommentContent());
+        childView.tv_name.setText(replyDetailBean.get(childPosition).getNickName());
+        childView.tv_content.setText(replyDetailBean.get(childPosition).getContent());
         return convertView;
     }
 

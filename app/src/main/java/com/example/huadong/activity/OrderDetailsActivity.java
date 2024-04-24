@@ -34,15 +34,15 @@ public class OrderDetailsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_order_details);
         toolbar=findViewById(R.id.order_back);
         order_price=findViewById(R.id.order_price);
-
-        List<String> list = OrderDataBase.getInstance(this).selectPart("test2");
+        OrderData orderData =(OrderData) getIntent().getSerializableExtra("orderData");
+        List<String> list = OrderDataBase.getInstance(this).selectPart(orderData.getOrder_name());
         orderDetailAdapter = new OrderDetailAdapter(this, list);
         recyclerView = findViewById(R.id.part_order);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(orderDetailAdapter);
         DividerItemDecoration dividerItemDecoration=new DividerItemDecoration(this,DividerItemDecoration.VERTICAL);
         recyclerView.addItemDecoration(dividerItemDecoration);
-        OrderData orderData =(OrderData) getIntent().getSerializableExtra("orderData");
+
         toolbar.setTitle(orderData.getOrder_name());
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override

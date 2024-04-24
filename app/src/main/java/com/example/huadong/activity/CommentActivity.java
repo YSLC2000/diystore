@@ -250,10 +250,11 @@ public class CommentActivity extends AppCompatActivity{
             @Override
             public void onClick(View view) {
                 String replyContent = commentText.getText().toString().trim();
+                OrderDataBase.getInstance(CommentActivity.this).replyInfo(1,list.get(position).getCommentName() ,list.get(position).getContent(),UserInfo.getsUserInfo().getUsername(),replyContent);
                 Toast.makeText(CommentActivity.this,replyContent,Toast.LENGTH_SHORT).show();
                 if(!TextUtils.isEmpty(replyContent)){
                     dialog.dismiss();
-                    ReplyDetailBean detailBean = new ReplyDetailBean(user_name,share_name,UserInfo.sUserInfo.getUsername(), replyContent);
+                    ReplyDetailBean detailBean = new ReplyDetailBean(UserInfo.sUserInfo.getUsername(),replyContent,list.get(position).getCommentName(),list.get(position).getContent() );
                     commentExpandAdapt.addTheReplyData(detailBean, position);
                     expandableListView.expandGroup(position);
                     Toast.makeText(CommentActivity.this,replyContent,Toast.LENGTH_SHORT).show();

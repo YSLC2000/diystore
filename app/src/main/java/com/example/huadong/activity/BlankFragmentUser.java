@@ -132,8 +132,8 @@ public class BlankFragmentUser extends Fragment {
             @Override
             public void onItemClick(OrderData orderData, int position) {
                 Intent intent = new Intent(getActivity(), OrderDetailsActivity.class);
+                Log.d("OrderDetailsActivity",orderData.toString());
                 intent.putExtra("orderData", orderData);
-
                 startActivity(intent);
             }
 
@@ -152,7 +152,7 @@ public class BlankFragmentUser extends Fragment {
                 int row = OrderDataBase.getInstance(getActivity()).addShare(user_name,sysTime,orderName,"","R.drawable.nvidia_4060",String.valueOf(orderData.getOrder_price()),999);
                 loadData();
 //                OrderDataBase.getInstance(getActivity()).commentsInfo((int)System.currentTimeMillis(),user_name,orderName,1,String.valueOf(System.currentTimeMillis()),String.valueOf(System.currentTimeMillis()),"shiwo","test");
-                OrderDataBase.getInstance(getActivity()).replyInfo(1,"1","TESt","1","TESt");
+
                 return row;
             }
         });
