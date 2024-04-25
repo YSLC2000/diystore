@@ -67,14 +67,6 @@ public class BlankFragmentStart extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                DataInfo dataInfo =new DataInfo();
-                dataInfo.dataInfo(getActivity());
-            }
-        }).start();
-
         View  view =inflater.inflate(R.layout.fragment_blank_start,container,false);
         btn = view.findViewById(R.id.button);
         btn.setOnClickListener(new View.OnClickListener() {

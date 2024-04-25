@@ -277,13 +277,31 @@ public class OrderDataBase extends SQLiteOpenHelper {
         displayListTestData1.setImg(R.drawable.nvidia_4060);
         img_list.add(displayListTestData);
         img_list.add(displayListTestData1);
+
         while (cursor.moveToNext()) {
             String share_name = cursor.getString(cursor.getColumnIndex("share_name"));
             String user_name = cursor.getString(cursor.getColumnIndex("user_name"));
             int user_img = cursor.getInt(cursor.getColumnIndex("user_img"));
+            List<String> str=selectPart(share_name);
+            List<DisplayListTestData> integers =new ArrayList<>();
+            new DisplayListTestData(partsArgument(str.get(0)).getPartImage());
+            for (int i=0;i<str.size();i++){
+                if(partsArgument(str.get(i)) == null){
+                    integers.add(new DisplayListTestData(R.drawable.cpu));
+                }else {
+                    integers.add(new DisplayListTestData(partsArgument(str.get(i)).getPartImage()));
+                }
+            }
+//            integers.add(new DisplayListTestData(partsArgument(str.get(1)).getPartImage()));
+//            integers.add(new DisplayListTestData(partsArgument(str.get(2)).getPartImage()));
+//            integers.add(new DisplayListTestData(partsArgument(str.get(3)).getPartImage()));
+//            integers.add(new DisplayListTestData(partsArgument(str.get(4)).getPartImage()));
+//            integers.add(new DisplayListTestData(partsArgument(str.get(5)).getPartImage()));
+//            integers.add(new DisplayListTestData(partsArgument(str.get(6)).getPartImage()));
+//            integers.add(new DisplayListTestData(partsArgument(str.get(7)).getPartImage()));
             String share_price = cursor.getString(cursor.getColumnIndex("share_price"));
             int share_num = cursor.getInt(cursor.getColumnIndex("share_num"));
-            list.add(new DisplayTestData(R.drawable.display_user_img_gwen, share_name, user_name, img_list, share_price, share_num));
+            list.add(new DisplayTestData(R.drawable.display_user_img_gwen, share_name, user_name, integers, share_price, share_num));
         }
         return list;
     }
@@ -323,7 +341,7 @@ public class OrderDataBase extends SQLiteOpenHelper {
     public PartsTestData partsArgument(String part_name) {
         SQLiteDatabase db = getReadableDatabase();
         PartsTestData partsTestData = null;
-        String sql = "select part_name,part_type,part_parameter,part_time,part_price  from part_table where part_name=?";
+        String sql = "select part_name,part_type,part_parameter,part_time,part_price,part_img  from part_table where part_name=?";
         String[] str = {part_name};
         Cursor cursor = db.rawQuery(sql, str);
         if (cursor.moveToNext()) {
@@ -332,7 +350,8 @@ public class OrderDataBase extends SQLiteOpenHelper {
             String partParameter = cursor.getString(cursor.getColumnIndex("part_parameter"));
             String partTime = cursor.getString(cursor.getColumnIndex("part_time"));
             int partPrice = cursor.getInt(cursor.getColumnIndex("part_price"));
-            partsTestData = new PartsTestData(partName, partParameter, partType, partPrice, partTime);
+            int partImg = cursor.getInt(cursor.getColumnIndex("part_img"));
+            partsTestData = new PartsTestData(partName, partParameter, partType, partPrice, partTime,partImg);
         }
         cursor.close();
 //        db.close();

@@ -38,8 +38,6 @@ import java.util.List;
  */
 public class BlankFragmentDisplay extends Fragment {
     private RecyclerView display_recycleView;
-    private List<DisplayListTestData> list_img =new ArrayList<>();
-
     private List<DisplayTestData> list =new ArrayList<>();
     private DisplayAdapter displayAdapter;
     private Button btn_flush,btn_search;
@@ -130,6 +128,7 @@ public class BlankFragmentDisplay extends Fragment {
             @Override
             public boolean onQueryTextChange(String newText) {
                 //此方法的作用是对搜索框里的文字实时监听
+
                 search_data=OrderDataBase.getInstance(getActivity()).displaySearch(newText);
                 Log.d("search_data",search_data.toString());
                 return false;
@@ -138,8 +137,13 @@ public class BlankFragmentDisplay extends Fragment {
         btn_search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                displayAdapter.setDisplayAdapter(search_data,getActivity());
-                display_recycleView.setAdapter(displayAdapter);
+                if(search_data==null){
+                    Toast.makeText(getActivity(),"请输入搜索内容",Toast.LENGTH_SHORT).show();
+                }else {
+                    displayAdapter.setDisplayAdapter(search_data,getActivity());
+                    display_recycleView.setAdapter(displayAdapter);
+                }
+
             }
         });
 

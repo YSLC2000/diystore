@@ -47,11 +47,14 @@ public class OrderDetailAdapter extends RecyclerView.Adapter<OrderDetailAdapter.
                  showData(name);
              }
          });
-         Log.d("partsTestData",name);
+//         Log.d("partsTestData",name);
          PartsTestData partsTestData= OrderDataBase.getInstance(context).partsArgument(name);
+//         Log.d("partsTestData",partsTestData.getPartImage()+"");
+
          if(partsTestData!=null){
              holder.partParameter.setText(partsTestData.getPartParameter());
              holder.partPrice.setText(String.valueOf(partsTestData.getPartPrice()));
+             holder.imageView.setImageResource(partsTestData.getPartImage());
              holder.partParameter.setOnClickListener(new View.OnClickListener() {
                  @Override
                  public void onClick(View v) {
@@ -59,7 +62,7 @@ public class OrderDetailAdapter extends RecyclerView.Adapter<OrderDetailAdapter.
                  }
              });
          }else{
-             holder.partParameter.setText("没有查到数据");
+             holder.partParameter.setText("没有选择配件");
          }
 
 

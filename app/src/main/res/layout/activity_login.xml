@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/login"
     android:layout_height="match_parent">
     <LinearLayout
@@ -23,7 +24,7 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginTop="40dp"
-            android:hint="请输入账号"
+            android:hint="请输入用户名"
             android:textColorHint="#ffffff"
             android:inputType="text"
             android:textColor="#ffffff"/>
@@ -44,8 +45,7 @@
             android:layout_height="60dp"
             android:layout_gravity="center"
             android:layout_marginTop="40dp"
-            android:background="@color/black"
-            android:backgroundTint="@null"
+            app:backgroundTint="@null"
             android:text="确定" />
         <TextView
             android:id="@+id/id_tv_register"

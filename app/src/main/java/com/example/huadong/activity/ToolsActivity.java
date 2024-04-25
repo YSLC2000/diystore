@@ -60,10 +60,6 @@ public class ToolsActivity extends AppCompatActivity {
 
                 }
                 List<String> list = new ArrayList<>();
-                //这个集合是为了合计订单价格list_price
-                List<String> list_price =new ArrayList<>();
-//                Log.d("json数据查看", jsonObject.toString());
-//                Log.d("json数据获取", test);
                 TextView textView, tv_price;
                 ImageView imageView;
                 String text = "false", drawable = "false";
@@ -79,35 +75,39 @@ public class ToolsActivity extends AppCompatActivity {
                         tv_price = viewHolder1.itemView.findViewById(R.id.price);
                         text = textView.getText().toString();
                         price =tv_price.getText().toString();
-                        settlement=Integer.valueOf(price)+settlement;
+                        if(price==""){
+                            settlement=settlement;
+                        }else {
+                            settlement=Integer.valueOf(price)+settlement;
+                        }
                         Log.d("settlement",settlement+"");
                         list.add(text);
                     }
                 }
-                JSONObject order_list = new JSONObject();
-                try {
-                    order_list.put("cpu", list.get(0).toString());
-                    order_list.put("mianboard", list.get(1).toString());
-                    order_list.put("graphics", list.get(2).toString());
-                    order_list.put("memorysticks", list.get(3).toString());
-                    order_list.put("power", list.get(4).toString());
-                    order_list.put("harddisk", list.get(5).toString());
-                    order_list.put("radiator", list.get(6).toString());
-                    order_list.put("chassis", list.get(7).toString());
-                } catch (JSONException e) {
-                    throw new RuntimeException(e);
-                }
-                JSONObject jsonObject = new JSONObject();
-                String test = "1";
-
-                try {
-                    jsonObject.put("order_id", "测试订单");
-                    jsonObject.put("order_name", order_list);
-                    JSONObject jsonObject1 = jsonObject.getJSONObject("order_name");
-                    test = jsonObject1.getString("cpu");
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+//                JSONObject order_list = new JSONObject();
+//                try {
+//                    order_list.put("cpu", list.get(0).toString());
+//                    order_list.put("mianboard", list.get(1).toString());
+//                    order_list.put("graphics", list.get(2).toString());
+//                    order_list.put("memorysticks", list.get(3).toString());
+//                    order_list.put("power", list.get(4).toString());
+//                    order_list.put("harddisk", list.get(5).toString());
+//                    order_list.put("radiator", list.get(6).toString());
+//                    order_list.put("chassis", list.get(7).toString());
+//                } catch (JSONException e) {
+//                    throw new RuntimeException(e);
+//                }
+//                JSONObject jsonObject = new JSONObject();
+//                String test = "1";
+//
+//                try {
+//                    jsonObject.put("order_id", "测试订单");
+//                    jsonObject.put("order_name", order_list);
+//                    JSONObject jsonObject1 = jsonObject.getJSONObject("order_name");
+//                    test = jsonObject1.getString("cpu");
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
                 String sysTime = String.valueOf(System.currentTimeMillis());
                 String order_name = editText.getText().toString();
                 String user_id = UserInfo.sUserInfo.getUsername();

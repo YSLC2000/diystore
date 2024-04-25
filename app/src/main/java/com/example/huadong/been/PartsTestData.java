@@ -26,6 +26,15 @@ public class PartsTestData implements Serializable {
         this.partTime=partTime;
     }
 
+    public PartsTestData(String partName, String partParameter, String partType, int partPrice, String partTime, int partImg) {
+        this.partName=partName;
+        this.partParameter=partParameter;
+        this.partType=partType;
+        this.partPrice=partPrice;
+        this.partTime=partTime;
+        this.partImage=partImg;
+    }
+
     public String getPartTime() {
         return partTime;
     }

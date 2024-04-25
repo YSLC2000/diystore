@@ -148,7 +148,7 @@ public class BlankFragmentUser extends Fragment {
                 String sysTime = String.valueOf(System.currentTimeMillis());
                 String user_name=UserInfo.getsUserInfo().getUsername();
                 String orderName=orderData.getOrder_name();
-                int row = OrderDataBase.getInstance(getActivity()).addShare(user_name,sysTime,orderName,"","R.drawable.nvidia_4060",String.valueOf(orderData.getOrder_price()),999);
+                int row = OrderDataBase.getInstance(getActivity()).addShare(user_name,sysTime,orderName,orderName,"R.drawable.nvidia_4060",String.valueOf(orderData.getOrder_price()),999);
                 loadData();
 //                OrderDataBase.getInstance(getActivity()).commentsInfo((int)System.currentTimeMillis(),user_name,orderName,1,String.valueOf(System.currentTimeMillis()),String.valueOf(System.currentTimeMillis()),"shiwo","test");
 

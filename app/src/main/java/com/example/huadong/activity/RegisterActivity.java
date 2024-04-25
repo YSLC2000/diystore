@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.example.huadong.R;
+import com.example.huadong.been.DataInfo;
 import com.example.huadong.untils.OrderDataBase;
 
 public class RegisterActivity extends AppCompatActivity {
@@ -20,6 +21,7 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText eEtRepassword;
     private Button eBtnRegister;
     private Toolbar back;
+    private DataInfo s=new DataInfo();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +29,7 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
         init();
         Event();
+        s.dataInfo(RegisterActivity.this);
     }
 
     private void init() {
@@ -48,9 +51,9 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
         eBtnRegister.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
+
 //                Toast.makeText(RegisterActivity.this, "点击了这里", Toast.LENGTH_SHORT).show();
                 String username = eEtUsername.getText().toString();
                 String password = eEtPassword.getText().toString();
