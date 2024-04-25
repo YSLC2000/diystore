@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -96,19 +97,24 @@ public class ToolsAdapter extends RecyclerView.Adapter<ToolsAdapter.ViewHolder> 
 
             //更新recycleView中的对应项内容
             ViewGroup.LayoutParams layoutParams = textView.getLayoutParams();
-            ViewGroup.LayoutParams layoutParams1 =textView2.getLayoutParams();
-            layoutParams.height = 100;
-            layoutParams1.height =100;
+            ViewGroup.LayoutParams layoutParams1 = textView2.getLayoutParams();
+            ViewGroup.LayoutParams img = imageView.getLayoutParams();
+//            layoutParams.height = 100;
+//            layoutParams1.height = 100;
 //            int widthMeasureSpec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
 //            int heightMeasureSpec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
 //            textView.measure(widthMeasureSpec, heightMeasureSpec);
 //            int width = textView.getMeasuredWidth();
 //            layoutParams.width = width;
             textView.setLayoutParams(layoutParams);
-            textView2.setLayoutParams(layoutParams1);
-            textView.setX(250);
-            textView2.setX(450);
-            textView2.setY(30);
+            textView.setMaxLines(1);
+            textView.setMaxEms(10);
+            textView.setEllipsize(TextUtils.TruncateAt.END);
+            textView.setText(partsTestData.getPartName());
+
+//            textView.setX(250);
+//            textView2.setX(450);
+//            textView2.setY(30);
 //            textView.post(new Runnable() {
 //                @Override
 //                public void run() {
@@ -116,10 +122,9 @@ public class ToolsAdapter extends RecyclerView.Adapter<ToolsAdapter.ViewHolder> 
 //                    textView.setWidth((int) width);
 //                }
 //            });
-            textView.setText(partsTestData.getPartName());
+            textView2.setLayoutParams(layoutParams1);
             textView2.setText(partsTestData.getPartPrice()+"");
             textView2.setTextColor(Color.parseColor("#FF0000"));
-            ViewGroup.LayoutParams img = imageView.getLayoutParams();
             img.width = 100;
             img.height = 100;
             imageView.setImageResource(partsTestData.getPartImage());

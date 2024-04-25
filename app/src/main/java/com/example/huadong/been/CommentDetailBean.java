@@ -9,7 +9,7 @@ public class CommentDetailBean {
     private String content;
     private String imgId;
     private int replyTotal;
-    private String createDate;
+    private String createDate;//
     private String commentName;//评论者用户名
 
     private List<ReplyDetailBean> replyList;//回复者用户列表

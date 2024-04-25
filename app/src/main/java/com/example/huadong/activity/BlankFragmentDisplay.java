@@ -42,7 +42,9 @@ public class BlankFragmentDisplay extends Fragment {
 
     private List<DisplayTestData> list =new ArrayList<>();
     private DisplayAdapter displayAdapter;
-    private Button btn_flush;
+    private Button btn_flush,btn_search;
+    private android.widget.SearchView searchView;
+    private List<DisplayTestData> search_data;
 
 
 
@@ -94,10 +96,14 @@ public class BlankFragmentDisplay extends Fragment {
         View view = inflater.inflate(R.layout.fragment_blank_display, container, false);
         return view ;
     }
+
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState){
         super.onViewCreated(view,savedInstanceState);
         btn_flush =view.findViewById(R.id.flush);
+        btn_search=view.findViewById(R.id.search_btn);
+
         SearchView searchView =(SearchView) view.findViewById(R.id.searchView);
 //        DataInit();
         list= OrderDataBase.getInstance(getActivity()).share_display();
@@ -110,6 +116,9 @@ public class BlankFragmentDisplay extends Fragment {
                 Toast.makeText(getActivity(),"点击了flush按钮",Toast.LENGTH_SHORT).show();
             }
         });
+        display_recycleView=view.findViewById(R.id.display_recycleView);
+        display_recycleView.setLayoutManager(new LinearLayoutManager(view.getContext(),LinearLayoutManager.VERTICAL,false));
+        display_recycleView.setAdapter(displayAdapter);
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -121,68 +130,24 @@ public class BlankFragmentDisplay extends Fragment {
             @Override
             public boolean onQueryTextChange(String newText) {
                 //此方法的作用是对搜索框里的文字实时监听
-
+                search_data=OrderDataBase.getInstance(getActivity()).displaySearch(newText);
+                Log.d("search_data",search_data.toString());
                 return false;
             }
         });
-        display_recycleView=view.findViewById(R.id.display_recycleView);
-        display_recycleView.setLayoutManager(new LinearLayoutManager(view.getContext(),LinearLayoutManager.VERTICAL,false));
-        display_recycleView.setAdapter(displayAdapter);
+        btn_search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                displayAdapter.setDisplayAdapter(search_data,getActivity());
+                display_recycleView.setAdapter(displayAdapter);
+            }
+        });
 
 }
+
     public void LoadData(){
         List<DisplayTestData> list=OrderDataBase.getInstance(getActivity()).share_display();
         displayAdapter.setDisplayAdapter(list,getActivity());
         display_recycleView.setAdapter(displayAdapter);
-    }
-
-    private void DataInit() {
-//        DisplayListTestData displayListTestData1 =new DisplayListTestData();
-//        DisplayListTestData displayListTestData2 =new DisplayListTestData();
-//        DisplayListTestData displayListTestData3 =new DisplayListTestData();
-//        DisplayListTestData displayListTestData4=new DisplayListTestData();
-//        DisplayListTestData displayListTestData5 =new DisplayListTestData();
-//        DisplayListTestData displayListTestData6 =new DisplayListTestData();
-//        displayListTestData1.setImg(R.drawable.nvidia_4060);
-//        displayListTestData2.setImg(R.drawable.intel_cpu);
-//        displayListTestData3.setImg(R.drawable.intel_cpu);
-//        displayListTestData4.setImg(R.drawable.intel_cpu);
-//        displayListTestData5.setImg(R.drawable.intel_cpu);
-//        displayListTestData6.setImg(R.drawable.intel_cpu);
-//        list_img.add(displayListTestData1);
-//        list_img.add(displayListTestData2);
-//        list_img.add(displayListTestData3);
-//        list_img.add(displayListTestData4);
-//        list_img.add(displayListTestData5);
-//        list_img.add(displayListTestData6);
-//
-//
-//        DisplayTestData displayTestData=new DisplayTestData();
-//        displayTestData.setDisplay_avatar(R.drawable.display_user_img_gwen);
-//        displayTestData.setDisplay_img(list_img);
-//        displayTestData.setDisplay_userName("YSLC");
-//        displayTestData.setDisplay_title("i9-14900k+RTX4090 超级生产力");
-//        displayTestData.setDisplay_user_price("￥11999");
-//        displayTestData.setDisplay_user_ThumbsUpNun("999");
-//        list.add(displayTestData);
-//
-//        DisplayTestData displayTestData1=new DisplayTestData();
-//        displayTestData1.setDisplay_avatar(R.drawable.nvidia_4060);
-//        displayTestData1.setDisplay_img(list_img);
-//        displayTestData1.setDisplay_userName("XHX");
-//        displayTestData1.setDisplay_user_price("￥4699");
-//        displayTestData1.setDisplay_title("i5-12490k+RTX4060ti" +"牙膏是要挤的，但是性能还是够的");
-//        displayTestData1.setDisplay_user_ThumbsUpNun("999");
-//        list.add(displayTestData1);
-//
-//        DisplayTestData displayTestData2=new DisplayTestData();
-//        displayTestData2.setDisplay_avatar(R.drawable.nvidia_4060);
-//        displayTestData2.setDisplay_img(list_img);
-//        displayTestData2.setDisplay_userName("XHX");
-//        displayTestData2.setDisplay_user_price("￥4699");
-//        displayTestData2.setDisplay_title("i5-12490k+RTX4060ti" +"牙膏是要挤的，但是性能还是够的");
-//        displayTestData2.setDisplay_user_ThumbsUpNun("999");
-//        list.add(displayTestData2);
-
     }
 }

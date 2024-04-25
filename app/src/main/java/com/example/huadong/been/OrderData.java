@@ -24,6 +24,7 @@ public class OrderData implements Serializable {
         this.order_name = order_name;
         this.order_price = order_price;
         this.order_time = order_time;
+
     }
 
     public String getOrder_name() {

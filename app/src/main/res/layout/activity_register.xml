@@ -6,7 +6,16 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     >
-    <include layout="@layout/common_toobar"/>
+    <androidx.appcompat.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/toolbar_back"
+        app:navigationIcon="@drawable/back"
+        android:background="@color/black"
+        app:titleTextColor="@color/white"
+        android:orientation="vertical">
+    </androidx.appcompat.widget.Toolbar>
     <EditText
         android:id="@+id/id_et_username"
         android:layout_width="match_parent"

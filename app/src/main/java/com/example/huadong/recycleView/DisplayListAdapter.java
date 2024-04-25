@@ -1,5 +1,10 @@
 package com.example.huadong.recycleView;
 
+import android.app.Dialog;
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,9 +21,11 @@ import java.util.List;
 
 public class DisplayListAdapter extends RecyclerView.Adapter<DisplayListAdapter.myViewHold> {
     List<DisplayListTestData> list = new ArrayList<>();
+    Context context;
 
-    public DisplayListAdapter(List line) {
+    public DisplayListAdapter(List line,Context context) {
         this.list = line;
+        this.context =context;
     }
 
     @NonNull
@@ -32,7 +39,16 @@ public class DisplayListAdapter extends RecyclerView.Adapter<DisplayListAdapter.
     @Override
     public void onBindViewHolder(@NonNull DisplayListAdapter.myViewHold holder, int position) {
         DisplayListTestData displayListTestData = list.get(position);
+        Drawable drawable = context.getResources().getDrawable(displayListTestData.getImg());
+        Bitmap bitmap = ((BitmapDrawable) drawable).getBitmap();
         holder.imageView.setImageResource(displayListTestData.getImg());
+        holder.imageView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                bigImageLoader(bitmap);
+                return false;
+            }
+        });
     }
 
     @Override
@@ -47,5 +63,19 @@ public class DisplayListAdapter extends RecyclerView.Adapter<DisplayListAdapter.
             super(itemView);
             imageView = itemView.findViewById(R.id.display_recycleView_img_list);
         }
+    }
+    private void bigImageLoader(Bitmap bitmap){
+        final Dialog dialog = new Dialog(context);
+        ImageView image = new ImageView(context);
+        image.setImageBitmap(bitmap);
+        dialog.setContentView(image);
+        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        dialog.show();
+        image.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                dialog.cancel();
+            }
+        });
     }
 }

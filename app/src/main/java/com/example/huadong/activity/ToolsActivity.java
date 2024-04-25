@@ -51,20 +51,24 @@ public class ToolsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tools);
         btn_finish = findViewById(R.id.btn_finish);
-        editText=findViewById(R.id.tool_name);
+        editText = findViewById(R.id.tool_name);
         btn_finish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                UserInfo userInfo =UserInfo.getsUserInfo();
-                if(userInfo!=null){
+                UserInfo userInfo = UserInfo.getsUserInfo();
+                if (userInfo != null) {
 
                 }
                 List<String> list = new ArrayList<>();
+                //这个集合是为了合计订单价格list_price
+                List<String> list_price =new ArrayList<>();
 //                Log.d("json数据查看", jsonObject.toString());
 //                Log.d("json数据获取", test);
-                TextView textView;
+                TextView textView, tv_price;
                 ImageView imageView;
-                String text="false",drawable="false";
+                String text = "false", drawable = "false";
+                String price = null;
+                int settlement=0;
 
                 for (int i = 0; i < toolsAdapter.getItemCount(); i++) {
                     RecyclerView.ViewHolder viewHolder = mToolsRecycleView.findViewHolderForAdapterPosition(i);
@@ -72,8 +76,11 @@ public class ToolsActivity extends AppCompatActivity {
                         ToolsAdapter.ViewHolder viewHolder1 = (ToolsAdapter.ViewHolder) viewHolder;
                         textView = viewHolder1.itemView.findViewById(R.id.tools_title);
                         imageView = viewHolder1.itemView.findViewById(R.id.tools_img);
+                        tv_price = viewHolder1.itemView.findViewById(R.id.price);
                         text = textView.getText().toString();
-//                        drawable = imageView.getDrawable().toString();
+                        price =tv_price.getText().toString();
+                        settlement=Integer.valueOf(price)+settlement;
+                        Log.d("settlement",settlement+"");
                         list.add(text);
                     }
                 }
@@ -81,12 +88,12 @@ public class ToolsActivity extends AppCompatActivity {
                 try {
                     order_list.put("cpu", list.get(0).toString());
                     order_list.put("mianboard", list.get(1).toString());
-                    order_list.put("graphics",  list.get(2).toString());
-                    order_list.put("memorysticks",  list.get(3).toString());
-                    order_list.put("power",  list.get(4).toString());
-                    order_list.put("harddisk",  list.get(5).toString());
-                    order_list.put("radiator",  list.get(6).toString());
-                    order_list.put("chassis",  list.get(7).toString());
+                    order_list.put("graphics", list.get(2).toString());
+                    order_list.put("memorysticks", list.get(3).toString());
+                    order_list.put("power", list.get(4).toString());
+                    order_list.put("harddisk", list.get(5).toString());
+                    order_list.put("radiator", list.get(6).toString());
+                    order_list.put("chassis", list.get(7).toString());
                 } catch (JSONException e) {
                     throw new RuntimeException(e);
                 }
@@ -102,26 +109,26 @@ public class ToolsActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
                 String sysTime = String.valueOf(System.currentTimeMillis());
-                String order_name =editText.getText().toString();
+                String order_name = editText.getText().toString();
                 String user_id = UserInfo.sUserInfo.getUsername();
-                String cpu =list.get(0).toString();
-                String mainBoard =list.get(1).toString();
+                String cpu = list.get(0).toString();
+                String mainBoard = list.get(1).toString();
                 String graphics = list.get(2).toString();
                 String memorySticks = list.get(3).toString();
-                String power =list.get(4).toString();
+                String power = list.get(4).toString();
                 String hardDisk = list.get(5).toString();
-                String radiator= list.get(6).toString();
-                String chassis =list.get(7).toString();
-                if(!order_name.isEmpty()){
-                    int row = OrderDataBase.getInstance(ToolsActivity.this).addOrders(user_id,sysTime,order_name,cpu,mainBoard,graphics,memorySticks,power,hardDisk,radiator,chassis,19999);
+                String radiator = list.get(6).toString();
+                String chassis = list.get(7).toString();
+                if (!order_name.isEmpty()) {
+                    int row = OrderDataBase.getInstance(ToolsActivity.this).addOrders(user_id, sysTime, order_name, cpu, mainBoard, graphics, memorySticks, power, hardDisk, radiator, chassis, settlement);
                     if (row > 0) {
                         Toast.makeText(ToolsActivity.this, "添加成功", Toast.LENGTH_SHORT).show();
                     } else {
                         Toast.makeText(ToolsActivity.this, "失败", Toast.LENGTH_SHORT).show();
                     }
                     finish();
-                }else {
-                   Toast.makeText(ToolsActivity.this,"标题不能为空",Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(ToolsActivity.this, "标题不能为空", Toast.LENGTH_SHORT).show();
                 }
 
             }

@@ -84,7 +84,17 @@ public class OrderDataBase extends SQLiteOpenHelper {
          * reply_content是回复者内容
          */
         db.execSQL("create table reply_table(reply_id int,comment_name varchar(32),comment_content varchar(32),reply_name varchar(32),reply_content varchar(32))");
-
+        /**
+         *
+         * recommend_table
+         * recommend
+         * webAdd
+         *    values.put("recommend", recommend);
+         *         values.put("webAdd", webAdd);
+         *         String nullData = "values(null,?,?)";
+         *         int insert = (int) db.insert("recommend_table", nullData, values);
+         */
+         db.execSQL("create table recommend_table(recommend varchar(32),webAdd varchar(32))");
     }
 
 
@@ -217,13 +227,14 @@ public class OrderDataBase extends SQLiteOpenHelper {
     public List<OrderData> queryCarList(String userName) {
         SQLiteDatabase db = getReadableDatabase();
         List<OrderData> list = new ArrayList<>();
-        String sql = "select user_name,order_name,time from order_table where user_name=?";
+        String sql = "select user_name,order_name,price,time from order_table where user_name=?";
         String[] selectionArgs = {userName};
         Cursor cursor = db.rawQuery(sql, selectionArgs);
         while (cursor.moveToNext()) {
             String order_name = cursor.getString(cursor.getColumnIndex("order_name"));
             String time = cursor.getString(cursor.getColumnIndex("time"));
-            list.add(new OrderData(order_name, 1999, time));
+            int price = cursor.getInt(cursor.getColumnIndex("price"));
+            list.add(new OrderData(order_name, price, time));
         }
         cursor.close();
 //        db.close();
@@ -261,9 +272,11 @@ public class OrderDataBase extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery(sql, null);
         List<DisplayListTestData> img_list = new ArrayList<>();
         DisplayListTestData displayListTestData = new DisplayListTestData();
+        DisplayListTestData displayListTestData1 = new DisplayListTestData();
         displayListTestData.setImg(R.drawable.i9_14900k);
-        displayListTestData.setImg(R.drawable.nvidia_4060);
+        displayListTestData1.setImg(R.drawable.nvidia_4060);
         img_list.add(displayListTestData);
+        img_list.add(displayListTestData1);
         while (cursor.moveToNext()) {
             String share_name = cursor.getString(cursor.getColumnIndex("share_name"));
             String user_name = cursor.getString(cursor.getColumnIndex("user_name"));
@@ -411,7 +424,7 @@ public class OrderDataBase extends SQLiteOpenHelper {
      * comment_name varchar(32),reply_name varchar(32),replay_content varchar(32)
      */
     @SuppressLint("Range")
-    public int replyInfo(int reply_id, String comment_name, String comment_content,String reply_name, String reply_content) {
+    public int replyInfo(int reply_id, String comment_name, String comment_content, String reply_name, String reply_content) {
         SQLiteDatabase db = getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put("reply_id", reply_id);
@@ -427,7 +440,7 @@ public class OrderDataBase extends SQLiteOpenHelper {
 
 
     /**
-     *通过user_name和share_name获取CommentDetailBean列表加入到CommentExpandAdapt中
+     * 通过user_name和share_name获取CommentDetailBean列表加入到CommentExpandAdapt中
      * user_name分享者用户名
      * share_name分享订单的名字
      * comment_name评论者名字
@@ -448,37 +461,90 @@ public class OrderDataBase extends SQLiteOpenHelper {
             int partImg = cursor.getInt(cursor.getColumnIndex("part_img"));
             String shareTime = cursor.getString(cursor.getColumnIndex("share_time"));
             String commentName = cursor.getString(cursor.getColumnIndex("comment_name"));
-            String commentContent =cursor.getString(cursor.getColumnIndex("comment_content"));
-            List<ReplyDetailBean> replyDetailBeans = getReplyDetailBeans(commentName,commentContent);
-            commentDetailBean = new CommentDetailBean( userName, commentContent, shareTime, commentName,replyDetailBeans);
+            String commentContent = cursor.getString(cursor.getColumnIndex("comment_content"));
+            List<ReplyDetailBean> replyDetailBeans = getReplyDetailBeans(commentName, commentContent);
+            commentDetailBean = new CommentDetailBean(userName, shareName, commentContent, commentName, replyDetailBeans);
             list.add(commentDetailBean);
         }
         return list;
     }
+
     /**
      * 从回复表中获取对应评论的回复数据将这些数据用集合存储
      */
     @SuppressLint("Range")
-    public List<ReplyDetailBean> getReplyDetailBeans(String comment_name, String comment_content){
-        List<ReplyDetailBean> list =new ArrayList<>();
+    public List<ReplyDetailBean> getReplyDetailBeans(String comment_name, String comment_content) {
+        List<ReplyDetailBean> list = new ArrayList<>();
         SQLiteDatabase db = getReadableDatabase();
         ReplyDetailBean replyDetailBean = null;
-        String sql ="select reply_id ,comment_name ,comment_content,reply_name ,reply_content from reply_table where comment_name=? and comment_content=?";
+        String sql = "select reply_id ,comment_name ,comment_content,reply_name ,reply_content from reply_table where comment_name=? and comment_content=?";
         String[] str = {comment_name, comment_content};
-        Cursor cursor =db.rawQuery(sql,str);
-        while (cursor.moveToNext()){
-            String commentName =cursor.getString(cursor.getColumnIndex("comment_name"));
-            String commentContent =cursor.getString(cursor.getColumnIndex("comment_content"));
-            String replyName =cursor.getString(cursor.getColumnIndex("reply_name"));
-            String replyContent =cursor.getString(cursor.getColumnIndex("reply_content"));
-            replyDetailBean=new ReplyDetailBean(replyName,replyContent,commentName,commentContent);
+        Cursor cursor = db.rawQuery(sql, str);
+        while (cursor.moveToNext()) {
+            String commentName = cursor.getString(cursor.getColumnIndex("comment_name"));
+            String commentContent = cursor.getString(cursor.getColumnIndex("comment_content"));
+            String replyName = cursor.getString(cursor.getColumnIndex("reply_name"));
+            String replyContent = cursor.getString(cursor.getColumnIndex("reply_content"));
+            replyDetailBean = new ReplyDetailBean(replyName, replyContent, commentName, commentContent);
             list.add(replyDetailBean);
         }
         return list;
     }
+
     /**
-     * 将回复插入进列表中
+     * 搜索功能
      */
-
-
+    @SuppressLint("Range")
+    public List<DisplayTestData> displaySearch(String share_name) {
+        SQLiteDatabase db = getReadableDatabase();
+        List<DisplayTestData> list = new ArrayList<>();
+        String selection = "share_name LIKE ?";
+        String[] selectionArgs = new String[]{"%" + share_name + "%"};
+//        String sql = "select order_name,user_name,share_name,user_img,share_price,share_num from share_table where share_name=?";
+//        String[] shareName = new String[]{"%" + share_name + "%"};
+        Cursor cursor = db.query("share_table", null, selection, selectionArgs, null, null, null);
+        List<DisplayListTestData> img_list = new ArrayList<>();
+        DisplayListTestData displayListTestData = new DisplayListTestData();
+        DisplayListTestData displayListTestData1 = new DisplayListTestData();
+        displayListTestData.setImg(R.drawable.i9_14900k);
+        displayListTestData1.setImg(R.drawable.nvidia_4060);
+        img_list.add(displayListTestData);
+        img_list.add(displayListTestData1);
+        while (cursor.moveToNext()) {
+            String shareName1 = cursor.getString(cursor.getColumnIndex("share_name"));
+            String user_name = cursor.getString(cursor.getColumnIndex("user_name"));
+            int user_img = cursor.getInt(cursor.getColumnIndex("user_img"));
+            String share_price = cursor.getString(cursor.getColumnIndex("share_price"));
+            int share_num = cursor.getInt(cursor.getColumnIndex("share_num"));
+            list.add(new DisplayTestData(R.drawable.display_user_img_gwen, shareName1, user_name, img_list, share_price, share_num));
+        }
+        return list;
+    }
+    /**
+     * 通过推荐名查找webView网址
+     */
+    @SuppressLint("Range")
+    public String getWebView(String recommend){
+        String web = null;
+        SQLiteDatabase db =getReadableDatabase();
+        String sql ="select recommend,webAdd from recommend_table where recommend=?";
+        String[] condition ={recommend};
+        Cursor cursor=db.rawQuery(sql,condition);
+        if(cursor.moveToNext()){
+             web =cursor.getString(cursor.getColumnIndex("webAdd"));
+        }
+        return web;
+    }
+    /**
+     * 插入推荐名webView网址
+     */
+    public void infoWebAdd(String recommend,String webAdd){
+        SQLiteDatabase db=getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("recommend", recommend);
+        values.put("webAdd", webAdd);
+        String nullData = "values(null,?,?)";
+        db.insert("recommend_table", nullData, values);
+//        db.close();
+    }
 }

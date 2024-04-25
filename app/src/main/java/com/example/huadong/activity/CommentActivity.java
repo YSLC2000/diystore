@@ -86,6 +86,7 @@ public class CommentActivity extends AppCompatActivity{
 //        }
 //        Log.d("list数据",list.toString());
         list=OrderDataBase.getInstance(CommentActivity.this).getCommentDetailBean(user_name,share_name);
+        Log.d("OrderDataBase获取的数据",list.toString());
         initExpandableListView(list);
         textView=findViewById(R.id.textView9);
         textView.setText(user_name);
@@ -204,8 +205,8 @@ public class CommentActivity extends AppCompatActivity{
 //                        ReplyDetailBean replyDetailBean =new ReplyDetailBean(str,str1);
 //                        list2.add(replyDetailBean);
 //                    }
-//                    CommentDetailBean detailBean = new CommentDetailBean(UserInfo.getsUserInfo().toString(), commentContent,String.valueOf(System.currentTimeMillis()),UserInfo.getsUserInfo().toString(),list2);
-//                    commentExpandAdapt.addTheCommentData(detailBean);
+                    CommentDetailBean detailBean = new CommentDetailBean(user_name, share_name,commentContent,UserInfo.getsUserInfo().getUsername(),OrderDataBase.getInstance(CommentActivity.this).getReplyDetailBeans(UserInfo.sUserInfo.getUsername(),commentContent));
+                    commentExpandAdapt.addTheCommentData(detailBean);
                     Toast.makeText(CommentActivity.this,"评论成功",Toast.LENGTH_SHORT).show();
 
                 }else {
@@ -250,7 +251,7 @@ public class CommentActivity extends AppCompatActivity{
             @Override
             public void onClick(View view) {
                 String replyContent = commentText.getText().toString().trim();
-                OrderDataBase.getInstance(CommentActivity.this).replyInfo(1,list.get(position).getCommentName() ,list.get(position).getContent(),UserInfo.getsUserInfo().getUsername(),replyContent);
+                OrderDataBase.getInstance(CommentActivity.this).replyInfo(1,list.get(position).getCommentName() ,list.get(position).getCreateDate(),UserInfo.getsUserInfo().getUsername(),replyContent);
                 Toast.makeText(CommentActivity.this,replyContent,Toast.LENGTH_SHORT).show();
                 if(!TextUtils.isEmpty(replyContent)){
                     dialog.dismiss();

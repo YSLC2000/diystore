@@ -122,7 +122,6 @@ public class BlankFragmentUser extends Fragment {
 
         textView=view.findViewById(R.id.user_name);
         textView.setText(UserInfo.getsUserInfo().getUsername());
-
         orderRecycleView = view.findViewById(R.id.order_recycleview);
         orderRecycleView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         orderRecycleView.setAdapter(orderAdapter);

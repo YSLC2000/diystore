@@ -22,6 +22,8 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="32dp"
         android:text="4060ti"
+        android:lines="1"
+        android:ellipsize="end"
         app:layout_constraintStart_toEndOf="@+id/part_img"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -29,8 +31,11 @@
         android:id="@+id/part_parameter"
         android:layout_width="156dp"
         android:layout_height="74dp"
+        android:textSize="13sp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
+        android:lines="4"
+        android:ellipsize="end"
         android:text="RTX 4060 Ti 是一款显卡，拥有 4352 CUDA 核心，配备 8GB / 16GB 128bit GDDR6 显存，TGP 功耗 160W / 165W，采用 PCIe 4.08 连接，售价 3199 元起，5 月 24 日开卖。 RTX 4060 显卡拥有 3072 CUDA 核心，配备 8GB GDDR6 128bit 显存，功耗 115W，采用 PCIe 4.08 连接，售价 2399 元起，7 月上市"
         app:layout_constraintStart_toEndOf="@+id/part_img"
         app:layout_constraintTop_toBottomOf="@+id/part_name" />

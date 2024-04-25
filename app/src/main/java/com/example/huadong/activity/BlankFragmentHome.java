@@ -103,7 +103,7 @@ public class BlankFragmentHome extends Fragment {
         homeTestData1.setHomeDay("2024/3/16");
         homeTestData1.setHomeNum(999);
         HomeTestData homeTestData2 =new HomeTestData();
-        homeTestData2.setHomeTitle("4060居然打不过3060ti？到底如何让我们揭晓");
+        homeTestData2.setHomeTitle("4060居然不敌3060ti？到底如何让我们揭晓");
         homeTestData2.setHomeImage(R.drawable.nvidia_4060);
         homeTestData2.setHomeDay("2024/1/17");
         homeTestData2.setHomeNum(999);

@@ -1,6 +1,7 @@
 package com.example.huadong.recycleView;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,10 +9,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.huadong.R;
 import com.example.huadong.been.OrderTestData;
+import com.example.huadong.been.PartsTestData;
+import com.example.huadong.untils.OrderDataBase;
 
 
 import java.util.ArrayList;
@@ -37,6 +41,28 @@ public class OrderDetailAdapter extends RecyclerView.Adapter<OrderDetailAdapter.
     public void onBindViewHolder(@NonNull OrderDetailAdapter.ViewHolder holder, int position) {
          String name =list.get(position);
          holder.partName.setText(name);
+         holder.partName.setOnClickListener(new View.OnClickListener() {
+             @Override
+             public void onClick(View v) {
+                 showData(name);
+             }
+         });
+         Log.d("partsTestData",name);
+         PartsTestData partsTestData= OrderDataBase.getInstance(context).partsArgument(name);
+         if(partsTestData!=null){
+             holder.partParameter.setText(partsTestData.getPartParameter());
+             holder.partPrice.setText(String.valueOf(partsTestData.getPartPrice()));
+             holder.partParameter.setOnClickListener(new View.OnClickListener() {
+                 @Override
+                 public void onClick(View v) {
+                     showData(OrderDataBase.getInstance(context).partsArgument(name).getPartParameter());
+                 }
+             });
+         }else{
+             holder.partParameter.setText("没有查到数据");
+         }
+
+
     }
 
     @Override
@@ -53,5 +79,13 @@ public class OrderDetailAdapter extends RecyclerView.Adapter<OrderDetailAdapter.
             partParameter=itemView.findViewById(R.id.part_parameter);
             partPrice=itemView.findViewById(R.id.part_price);
         }
+    }
+    public void showData(String str){
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setMessage(str)
+                .setTitle("内容展示")
+                .setPositiveButton("OK", null);
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 }

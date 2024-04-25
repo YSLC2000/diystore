@@ -88,7 +88,7 @@ public class CommentExpandAdapt extends BaseExpandableListAdapter {
         Log.d("commentDetailBean1",commentDetailBean1.toString());
 
         groupView.tv_name.setText(commentDetailBean1.getCommentName());
-        groupView.tv_content.setText(commentDetailBean1.getContent());
+        groupView.tv_content.setText(commentDetailBean1.getCreateDate());
         groupView.tv_time.setText("2024/4/24");
         groupView.imageView.setImageResource(R.drawable.display_user_img_gwen);
         return convertView;

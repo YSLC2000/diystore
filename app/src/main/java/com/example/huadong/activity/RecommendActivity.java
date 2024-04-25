@@ -12,6 +12,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.example.huadong.R;
+import com.example.huadong.untils.OrderDataBase;
 
 public class RecommendActivity extends AppCompatActivity {
     private Toolbar toolbar;
@@ -39,6 +40,8 @@ public class RecommendActivity extends AppCompatActivity {
         WebSettings webSettings =webView.getSettings();
         webSettings.setJavaScriptEnabled(true);
         webSettings.setJavaScriptCanOpenWindowsAutomatically(true);
-        webView.loadUrl("https://ms.mbd.baidu.com/r/1i1wbpkbJUQ?f=cp&u=f415030d9d391153&urlext=%7B%22cuid%22%3A%22_uHYugucS80IOvizgaS9ulPjvu_6PStQ_avlijiOBfKo0qqSB%22%7D");
+        webView.loadUrl( OrderDataBase.getInstance(RecommendActivity.this).getWebView(name));
+//        https://zhuanlan.zhihu.com/p/630784566
+//        webView.loadUrl("https://zhuanlan.zhihu.com/p/630784566");
     }
 }
