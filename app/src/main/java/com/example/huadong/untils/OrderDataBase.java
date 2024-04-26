@@ -94,7 +94,11 @@ public class OrderDataBase extends SQLiteOpenHelper {
          *         String nullData = "values(null,?,?)";
          *         int insert = (int) db.insert("recommend_table", nullData, values);
          */
-         db.execSQL("create table recommend_table(recommend varchar(32),webAdd varchar(32))");
+        db.execSQL("create table recommend_table(recommend varchar(32),webAdd varchar(32))");
+        /**
+         * 点赞表的创建
+         */
+        db.execSQL("create table thumbs_table(thumbs_up int,share_name varchar(32))");
     }
 
 
@@ -282,37 +286,72 @@ public class OrderDataBase extends SQLiteOpenHelper {
             String share_name = cursor.getString(cursor.getColumnIndex("share_name"));
             String user_name = cursor.getString(cursor.getColumnIndex("user_name"));
             int user_img = cursor.getInt(cursor.getColumnIndex("user_img"));
-            List<String> str=selectPart(share_name);
-            List<DisplayListTestData> integers =new ArrayList<>();
+            List<String> str = selectPart(share_name);
+            List<DisplayListTestData> integers = new ArrayList<>();
             new DisplayListTestData(partsArgument(str.get(0)).getPartImage());
-            for (int i=0;i<str.size();i++){
-                if(partsArgument(str.get(i)) == null){
-                    integers.add(new DisplayListTestData(R.drawable.cpu));
-                }else {
+            for (int i = 0; i < str.size(); i++) {
+                if (partsArgument(str.get(i)) != null) {
                     integers.add(new DisplayListTestData(partsArgument(str.get(i)).getPartImage()));
                 }
+//                if (partsArgument(str.get(i)) == null) {
+//                    integers.add(new DisplayListTestData(R.drawable.cpu));
+//                }
+//                else {
+//                    integers.add(new DisplayListTestData(partsArgument(str.get(i)).getPartImage()));
+//                }
             }
-//            integers.add(new DisplayListTestData(partsArgument(str.get(1)).getPartImage()));
-//            integers.add(new DisplayListTestData(partsArgument(str.get(2)).getPartImage()));
-//            integers.add(new DisplayListTestData(partsArgument(str.get(3)).getPartImage()));
-//            integers.add(new DisplayListTestData(partsArgument(str.get(4)).getPartImage()));
-//            integers.add(new DisplayListTestData(partsArgument(str.get(5)).getPartImage()));
-//            integers.add(new DisplayListTestData(partsArgument(str.get(6)).getPartImage()));
-//            integers.add(new DisplayListTestData(partsArgument(str.get(7)).getPartImage()));
+//
             String share_price = cursor.getString(cursor.getColumnIndex("share_price"));
             int share_num = cursor.getInt(cursor.getColumnIndex("share_num"));
             list.add(new DisplayTestData(R.drawable.display_user_img_gwen, share_name, user_name, integers, share_price, share_num));
         }
         return list;
     }
-
     /**
-     * 点赞按钮自增功能
+     * 订单的点赞更新功能
      */
     @SuppressLint("Range")
-    public void thumbsUp() {
+    public int thumbsUp(String share_name,int num){
         SQLiteDatabase db = getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("thumbs_up", num);
+        values.put("share_name", share_name);
+        String whereClause = "share_name = ?";
+        String[] whereArgs = {share_name};
+        int i =db.update("thumbs_table", values, whereClause, whereArgs);
+     return i;
     }
+
+    /**
+     * 点赞数量统计功能
+     */
+    @SuppressLint("Range")
+    public void thumbsInfo(String share_name,int num) {
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("thumbs_up", num);
+        values.put("share_name", share_name);
+        String nullData = "values(null,?,?)";
+        db.insert("thumbs_table", nullData, values);
+//      db.close();
+    }
+    /**
+     * 通过订单吗获取该订单的点赞数量
+     */
+    @SuppressLint("Range")
+    public int getNum(String share_name) {
+        int Thumbs = 0;
+        SQLiteDatabase db = getReadableDatabase();
+        String sql = "select share_name,thumbs_up from thumbs_table where share_name=?";
+        String[] condition = {share_name};
+        Cursor cursor = db.rawQuery(sql, condition);
+        if (cursor.moveToNext()) {
+            Thumbs = cursor.getInt(cursor.getColumnIndex("thumbs_up"));
+        }
+        return Thumbs;
+    }
+    
+    
 
     /**
      * 配件数据注入
@@ -351,7 +390,7 @@ public class OrderDataBase extends SQLiteOpenHelper {
             String partTime = cursor.getString(cursor.getColumnIndex("part_time"));
             int partPrice = cursor.getInt(cursor.getColumnIndex("part_price"));
             int partImg = cursor.getInt(cursor.getColumnIndex("part_img"));
-            partsTestData = new PartsTestData(partName, partParameter, partType, partPrice, partTime,partImg);
+            partsTestData = new PartsTestData(partName, partParameter, partType, partPrice, partTime, partImg);
         }
         cursor.close();
 //        db.close();
@@ -539,26 +578,28 @@ public class OrderDataBase extends SQLiteOpenHelper {
         }
         return list;
     }
+
     /**
      * 通过推荐名查找webView网址
      */
     @SuppressLint("Range")
-    public String getWebView(String recommend){
+    public String getWebView(String recommend) {
         String web = null;
-        SQLiteDatabase db =getReadableDatabase();
-        String sql ="select recommend,webAdd from recommend_table where recommend=?";
-        String[] condition ={recommend};
-        Cursor cursor=db.rawQuery(sql,condition);
-        if(cursor.moveToNext()){
-             web =cursor.getString(cursor.getColumnIndex("webAdd"));
+        SQLiteDatabase db = getReadableDatabase();
+        String sql = "select recommend,webAdd from recommend_table where recommend=?";
+        String[] condition = {recommend};
+        Cursor cursor = db.rawQuery(sql, condition);
+        if (cursor.moveToNext()) {
+            web = cursor.getString(cursor.getColumnIndex("webAdd"));
         }
         return web;
     }
+
     /**
      * 插入推荐名webView网址
      */
-    public void infoWebAdd(String recommend,String webAdd){
-        SQLiteDatabase db=getWritableDatabase();
+    public void infoWebAdd(String recommend, String webAdd) {
+        SQLiteDatabase db = getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put("recommend", recommend);
         values.put("webAdd", webAdd);
