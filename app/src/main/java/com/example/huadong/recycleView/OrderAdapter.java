@@ -129,7 +129,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.myViewHodler
                         if(row>0){
                             Toast.makeText(context,"分享成功",Toast.LENGTH_SHORT).show();
                         }else{
-                            Toast.makeText(context,"分享失败",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context,"该订单名称已经存在",Toast.LENGTH_SHORT).show();
                         }
                     }
                 return true;

@@ -217,6 +217,26 @@ public class OrderDataBase extends SQLiteOpenHelper {
         return true;
     }
 
+    /**
+     * 将share_table中数据遍历出来对比用户名是否已经存在
+     * false是存在
+     * true是不存在
+     */
+    @SuppressLint("Range")
+    public Boolean orderNameExist(String user_name,String order_name){
+        SQLiteDatabase db =getReadableDatabase();
+        String sql ="select user_name,share_name from share_table";
+        Cursor cursor=db.rawQuery(sql,null);
+        while(cursor.moveToNext()){
+            String   userName = cursor.getString(cursor.getColumnIndex("user_name"));
+            String   orderName = cursor.getString(cursor.getColumnIndex("share_name"));
+            if(user_name.equals(userName)&&order_name.equals(orderName)){
+                return false;
+            }
+        }
+        return true;
+    }
+
 //    public List<String> order_display() throws JSONException {
 //
 //        List<String> list = new ArrayList<>();
@@ -578,16 +598,39 @@ public class OrderDataBase extends SQLiteOpenHelper {
         displayListTestData1.setImg(R.drawable.nvidia_4060);
         img_list.add(displayListTestData);
         img_list.add(displayListTestData1);
-        while (cursor.moveToNext()) {
-            String shareName1 = cursor.getString(cursor.getColumnIndex("share_name"));
-            String user_name = cursor.getString(cursor.getColumnIndex("user_name"));
-            int user_img = cursor.getInt(cursor.getColumnIndex("user_img"));
-            String share_price = cursor.getString(cursor.getColumnIndex("share_price"));
-            int share_num = cursor.getInt(cursor.getColumnIndex("share_num"));
-            list.add(new DisplayTestData(R.drawable.display_user_img_gwen, shareName1, user_name, img_list, share_price, share_num));
+        List<DisplayListTestData> integers = new ArrayList<>();
+        String sql = "select order_name,user_name,share_name,user_img,share_price,share_num from share_table where order_name=?";
+        String[] uu ={share_name};
+        Cursor cursor1 = db.rawQuery(sql, uu);
+        while (cursor1.moveToNext()) {
+            String share_name1 = cursor1.getString(cursor1.getColumnIndex("share_name"));
+            String user_name1 = cursor1.getString(cursor1.getColumnIndex("user_name"));
+            int user_img1 = cursor1.getInt(cursor1.getColumnIndex("user_img"));
+            List<String> str = selectPart(share_name1);
+            new DisplayListTestData(partsArgument(str.get(0)).getPartImage());
+            for (int i = 0; i < str.size(); i++) {
+                if (partsArgument(str.get(i)) != null) {
+                    integers.add(new DisplayListTestData(partsArgument(str.get(i)).getPartImage()));
+                }
+            }
         }
+            while (cursor.moveToNext()) {
+                String shareName1 = cursor.getString(cursor.getColumnIndex("share_name"));
+                String user_name = cursor.getString(cursor.getColumnIndex("user_name"));
+                int user_img = cursor.getInt(cursor.getColumnIndex("user_img"));
+                String share_price = cursor.getString(cursor.getColumnIndex("share_price"));
+                int share_num = cursor.getInt(cursor.getColumnIndex("share_num"));
+                if(integers.size()==0){
+
+                }else {
+                    list.add(new DisplayTestData(R.drawable.display_user_img_gwen, shareName1, user_name, integers, share_price, share_num));
+                }
+
+            }
         return list;
-    }
+        }
+
+
 
     /**
      * 通过推荐名查找webView网址

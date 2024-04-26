@@ -144,11 +144,17 @@ public class BlankFragmentUser extends Fragment {
 
             @Override
             public int share(OrderData orderData, int position) {
+                int row = 0;
                 String sysTime = String.valueOf(System.currentTimeMillis());
                 String user_name=UserInfo.getsUserInfo().getUsername();
                 String orderName=orderData.getOrder_name();
-                int row = OrderDataBase.getInstance(getActivity()).addShare(user_name,sysTime,orderName,orderName,"R.drawable.nvidia_4060",String.valueOf(orderData.getOrder_price()),999);
-                loadData();
+                if(!OrderDataBase.getInstance(getActivity()).orderNameExist(user_name,orderName)){
+//                    Toast.makeText(getActivity(),"该订单名称已经存在",Toast.LENGTH_SHORT).show();
+                }else {
+                     row = OrderDataBase.getInstance(getActivity()).addShare(user_name,sysTime,orderName,orderName,"R.drawable.nvidia_4060",String.valueOf(orderData.getOrder_price()),999);
+                     loadData();
+                }
+
 //                OrderDataBase.getInstance(getActivity()).commentsInfo((int)System.currentTimeMillis(),user_name,orderName,1,String.valueOf(System.currentTimeMillis()),String.valueOf(System.currentTimeMillis()),"shiwo","test");
 
                 return row;

@@ -35,12 +35,25 @@ public class DataInfo {
         orderDataBase.infoParts("Thermalright AX120 R SE CPU风冷散热器",time, R.drawable.thermalright,"散热","AGHP逆重力热管支持LGA1700/AM5 4热管S-FDB12CM风扇附带硅","2023/4",219);
         orderDataBase.infoParts("酷冷至尊(CoolerMaster)暴雪T620S",time, R.drawable.klzz,"散热","CPU风冷散热器 支持多平台/双塔/6热管/镀镍铜底/ARGB灯效/TDP260W","2023/4",159);
         //主板数据注入
-        orderDataBase.infoParts("b760m",time, R.drawable.b760m,"主板","酷睿十二代i5板板","2023/4",1300);
-        orderDataBase.infoParts("z790",time, R.drawable.z790,"主板","酷睿十二代i7，i9板板","2023/4",1800);
+        orderDataBase.infoParts("Asus/华硕ROG STRIX B760-G",time, R.drawable.b760m,"主板","GAMING WIFI/D4小吹雪台式机电脑主板，支持酷睿13、14代cpu","2023/4",1159);
+        orderDataBase.infoParts("技嘉 Z790M AORUS ELITE AX",time, R.drawable.z790,"主板","ICE冰雕/小雕/魔鹰X/雪雕ATX白色主板，支持酷睿13、14代cpu","2023/4",1189);
+        orderDataBase.infoParts("Asus/华硕ROG STRIX Z690-A",time, R.drawable.z690,"主板","GAMING WIFI D4吹雪主板支持12代酷睿","2023/4",1099);
+        orderDataBase.infoParts("Asus/华硕PRIME B660M-K",time, R.drawable.z790,"主板","12代酷睿i5 12400f主板CPU套装 H610M-K","2023/4",699);
+        orderDataBase.infoParts("微星B650M 主板",time, R.drawable.b760m,"主板","GAMING B650M-PLUS WIFI 迫击炮主板 支持 CPU","2023/4",3197);
+
+
         //CPU数据注入
         orderDataBase.infoParts("i9 14900k",time, R.drawable.i9_14900k,"CPU","高性能生产力cpu","2023/4",3999);
         orderDataBase.infoParts("i5 12400f",time, R.drawable.i512400f,"CPU","家用cpu","2023/4",1099);
         orderDataBase.infoParts("i7 13700k",time, R.drawable.i7_13700k,"CPU","我是高级生产力","2023/4",2999);
+        orderDataBase.infoParts("英特尔 i5-14400F 酷睿14代",time, R.drawable.i5_14400f,"CPU","处理器 10核16线程 睿频至高可达4.7Ghz 20M三级缓存 台式机盒装CPU","2023/4",1599);
+        orderDataBase.infoParts("英特尔 i3-14100F",time, R.drawable.i3_14100f,"CPU","4核8线程 睿频至高可达4.7Ghz 12M三级缓存 台式机盒装CPU","2023/4",999);
+        orderDataBase.infoParts("英特尔 i7-14700KF",time, R.drawable.i7_14700kf,"CPU","酷睿14代 处理器 20核28线程 睿频至高可达5.6Ghz 33M三级缓存 台式机盒装CPU","2023/4",2999);
+        orderDataBase.infoParts("英特尔 i5-13400F",time, R.drawable.i5_13400f,"CPU","酷睿13代 处理器 10核16线程 睿频至高可达4.6Ghz 20M三级缓存 台式机CPU","2023/4",1499);
+        orderDataBase.infoParts("AMD 锐龙7 7800X3D游戏处理器",time, R.drawable.amd7,"CPU","8核16线程 104MB游戏缓存 加速频率至高5.0GHz 盒装CPU","2023/4",2549);
+
+
+
         orderDataBase.infoWebAdd("老黄刀法精准，这牙膏我还能再挤十年","https://zhuanlan.zhihu.com/p/630784566");
         orderDataBase.infoWebAdd("红色'农民崛起'，AMD yes！战未来","https://zhuanlan.zhihu.com/p/688876086");
         orderDataBase.infoWebAdd("4060居然不敌3060ti？到底如何让我们揭晓","https://www.zhihu.com/question/580295253/answer/2863045571");

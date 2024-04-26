@@ -128,7 +128,6 @@ public class BlankFragmentDisplay extends Fragment {
             @Override
             public boolean onQueryTextChange(String newText) {
                 //此方法的作用是对搜索框里的文字实时监听
-
                 search_data=OrderDataBase.getInstance(getActivity()).displaySearch(newText);
                 Log.d("search_data",search_data.toString());
                 return false;
