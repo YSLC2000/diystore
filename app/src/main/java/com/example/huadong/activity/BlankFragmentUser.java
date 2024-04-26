@@ -119,7 +119,6 @@ public class BlankFragmentUser extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         textView=view.findViewById(R.id.user_name);
         textView.setText(UserInfo.getsUserInfo().getUsername());
         orderRecycleView = view.findViewById(R.id.order_recycleview);

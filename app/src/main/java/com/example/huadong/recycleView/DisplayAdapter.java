@@ -67,7 +67,8 @@ public class DisplayAdapter extends RecyclerView.Adapter<DisplayAdapter.myViewHo
         holder.display_img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                count++;
+                count = OrderDataBase.getInstance(context).getNum(displayTestData.getDisplay_title());
+                count=count+1;
 //                OrderDataBase.getInstance(context).thumbsInfo(displayTestData.getDisplay_title(), count);
 //                int i=OrderDataBase.getInstance(context).getNum(displayTestData.getDisplay_title());
                 OrderDataBase.getInstance(context).thumbsUp(displayTestData.getDisplay_title(),count);
