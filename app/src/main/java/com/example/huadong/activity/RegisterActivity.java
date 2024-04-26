@@ -62,9 +62,18 @@ public class RegisterActivity extends AppCompatActivity {
                     Toast.makeText(RegisterActivity.this, "账号和密码不能为空", Toast.LENGTH_SHORT).show();
                     return;
                 }
+                //验证该用户名是否存在
+                if(!OrderDataBase.getInstance(RegisterActivity.this).userNameExist(username)){
+                    Toast.makeText(RegisterActivity.this, "该用户已经存在", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+//                for(int i=0;i<OrderDataBase.getInstance(RegisterActivity.this).userNameExist().size();i++){
+//                    if(OrderDataBase.getInstance(RegisterActivity.this).userNameExist().get(i).equals(username)){
+//                        Toast.makeText(RegisterActivity.this,"该用户名已经存在",Toast.LENGTH_SHORT).show();
+//                    }
+//                }
                 if(!rePassword.equals(password)){
                     Toast.makeText(RegisterActivity.this, "两次密码输入不一致", Toast.LENGTH_SHORT).show();
-                    return;
                 }else{
                     int row = OrderDataBase.getInstance(RegisterActivity.this).register(username,password);
                     if(row > 0){

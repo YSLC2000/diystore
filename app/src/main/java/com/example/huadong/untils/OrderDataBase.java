@@ -197,6 +197,25 @@ public class OrderDataBase extends SQLiteOpenHelper {
 //        db.close();
         return insert;
     }
+    /**
+     * 将user_table中数据遍历出来对比用户名是否已经存在
+     * false是存在
+     * true是不存在
+     */
+    @SuppressLint("Range")
+    public Boolean userNameExist(String name){
+        SQLiteDatabase db =getReadableDatabase();
+        String sql ="select user_name from user_table";
+        List<String> userNameList =new ArrayList<>();
+        Cursor cursor=db.rawQuery(sql,null);
+        while(cursor.moveToNext()){
+           String   userName = cursor.getString(cursor.getColumnIndex("user_name"));
+           if(name.equals(userName)){
+               return false;
+           }
+        }
+        return true;
+    }
 
 //    public List<String> order_display() throws JSONException {
 //
@@ -244,15 +263,8 @@ public class OrderDataBase extends SQLiteOpenHelper {
 //        db.close();
         return list;
     }
-
-    /**
-     * 分享展示
-     */
-    @SuppressLint("Range")
-    public List<String> display_order() {
-        List<String> list = new ArrayList<>();
-        return list;
-    }
+    
+  
 
     /**
      * 删除订单
@@ -350,8 +362,6 @@ public class OrderDataBase extends SQLiteOpenHelper {
         }
         return Thumbs;
     }
-    
-    
 
     /**
      * 配件数据注入

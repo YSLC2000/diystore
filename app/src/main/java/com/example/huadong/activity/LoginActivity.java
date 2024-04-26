@@ -49,7 +49,8 @@ public class LoginActivity extends AppCompatActivity {
                             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                             startActivity(intent);
                             finish();
-
+                        }else{
+                            Toast.makeText(LoginActivity.this, "账户或者密码错误", Toast.LENGTH_SHORT).show();
                         }
                     }else{
                         Toast.makeText(LoginActivity.this, "账号不存在", Toast.LENGTH_SHORT).show();

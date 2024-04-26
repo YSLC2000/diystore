@@ -55,7 +55,7 @@ public class OrderDetailsActivity extends AppCompatActivity {
                 img.setImageResource(R.drawable.ewm);
                 AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(OrderDetailsActivity.this);
                 alertDialogBuilder.setTitle("提示")
-                        .setMessage("确定要删除吗？")
+                        .setMessage("支付订单")
                         .setView(img)
                         .setPositiveButton("确定", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int whichButton) {

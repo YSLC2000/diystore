@@ -111,7 +111,7 @@ public class BlankFragmentDisplay extends Fragment {
             @Override
             public void onClick(View v) {
                 LoadData();
-                Toast.makeText(getActivity(),"点击了flush按钮",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(),"刷新成功",Toast.LENGTH_SHORT).show();
             }
         });
         display_recycleView=view.findViewById(R.id.display_recycleView);

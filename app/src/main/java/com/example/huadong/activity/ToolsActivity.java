@@ -158,7 +158,8 @@ public class ToolsActivity extends AppCompatActivity {
                 // 处理从 ResultActivity 返回的结果
                 result = (PartsTestData) data.getSerializableExtra("back");
                 Integer position = data.getIntExtra("backPosition", 0);
-                Toast.makeText(this, result + "添加成功", Toast.LENGTH_SHORT).show();
+                //展示回传信息
+//                Toast.makeText(this, result + "添加成功", Toast.LENGTH_SHORT).show();
                 Log.d("backPosition", position.toString());
                 Log.d("backPosition", result.toString());
                 ToolsAdapter.ViewHolder viewHolder = (ToolsAdapter.ViewHolder) mToolsRecycleView.findViewHolderForAdapterPosition(position);
@@ -168,7 +169,7 @@ public class ToolsActivity extends AppCompatActivity {
                 }
             } else if (resultCode == RESULT_CANCELED) {
                 // 处理用户取消操作
-                Toast.makeText(this, "Canceled", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "取消选择", Toast.LENGTH_SHORT).show();
             }
         }
     }
